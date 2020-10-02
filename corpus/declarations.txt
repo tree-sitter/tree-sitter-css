@@ -86,8 +86,8 @@ a {
   c: 5em;
   margin: 10E3px;
   margin: -456.8px;
-  margin: -0.0px;
   margin: -5px;
+  margin: -0.0px;
 }
 
 ---
@@ -98,8 +98,8 @@ a {
     (declaration (property_name) (integer_value (unit)))
     (declaration (property_name) (float_value (unit)))
     (declaration (property_name) (float_value (unit)))
-    (declaration (property_name) (float_value (unit)))
-    (declaration (property_name) (integer_value (unit))))))
+    (declaration (property_name) (integer_value (unit)))
+    (declaration (property_name) (float_value (unit))))))
 
 ============================
 Binary arithmetic operators
