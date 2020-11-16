@@ -23,8 +23,11 @@
 "only" @operator
 
 (attribute_selector (plain_value) @string)
-(pseudo_element_selector (tag_name) @attribute)
-(pseudo_class_selector (class_name) @attribute)
+
+((property_name) @variable
+ (#match? @variable "^--"))
+((plain_value) @variable
+ (#match? @variable "^--"))
 
 (class_name) @property
 (id_name) @property
@@ -32,14 +35,11 @@
 (property_name) @property
 (feature_name) @property
 
+(pseudo_element_selector (tag_name) @attribute)
+(pseudo_class_selector (class_name) @attribute)
 (attribute_name) @attribute
 
 (function_name) @function
-
-((property_name) @variable
- (#match? @variable "^--"))
-((plain_value) @variable
- (#match? @variable "^--"))
 
 "@media" @keyword
 "@import" @keyword
@@ -59,6 +59,18 @@
 (float_value) @number
 (unit) @type
 
-"#" @punctuation.delimiter
-"," @punctuation.delimiter
-":" @punctuation.delimiter
+[
+  "#"
+  ","
+  "."
+  ":"
+  "::"
+  ";"
+] @punctuation.delimiter
+
+[
+  "{"
+  ")"
+  "("
+  "}"
+] @punctuation.bracket
