@@ -4,3 +4,9 @@ target
 *.log
 package-lock.json
 Cargo.lock
+*.a
+*.dylib
+*.so
+*.o
+bindings/c/*.h
+bindings/c/*.pc 
