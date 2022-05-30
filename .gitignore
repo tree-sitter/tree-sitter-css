@@ -9,4 +9,5 @@ Cargo.lock
 *.so
 *.o
 bindings/c/*.h
-bindings/c/*.pc 
+bindings/c/*.pc
+.build/
