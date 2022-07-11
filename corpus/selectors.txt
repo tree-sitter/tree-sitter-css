@@ -112,7 +112,7 @@ a::first-line {}
 (stylesheet
   (rule_set
     (selectors (pseudo_element_selector (tag_name)
-      (arguments (tag_name)))
+      (arguments (tag_name))))
     (block)))
 
 
