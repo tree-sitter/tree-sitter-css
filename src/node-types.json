@@ -67,6 +67,29 @@
     }
   },
   {
+    "type": "apply_directive",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "important",
+          "named": true
+        },
+        {
+          "type": "integer_value",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "arguments",
     "named": true,
     "fields": {},
@@ -468,6 +491,10 @@
       "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "apply_directive",
+          "named": true
+        },
         {
           "type": "at_rule",
           "named": true
@@ -1877,7 +1904,15 @@
     "fields": {}
   },
   {
+    "type": " ",
+    "named": false
+  },
+  {
     "type": "#",
+    "named": false
+  },
+  {
+    "type": "#{!important}",
     "named": false
   },
   {
@@ -1938,6 +1973,10 @@
   },
   {
     "type": ">",
+    "named": false
+  },
+  {
+    "type": "@apply",
     "named": false
   },
   {
@@ -2006,6 +2045,10 @@
   },
   {
     "type": "id_name",
+    "named": true
+  },
+  {
+    "type": "identifier",
     "named": true
   },
   {

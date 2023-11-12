@@ -119,7 +119,27 @@ module.exports = grammar({
       $.namespace_statement,
       $.keyframes_statement,
       $.supports_statement,
-      $.at_rule
+      $.at_rule,
+      $.apply_directive,
+    ),
+
+    apply_directive: $ => seq(
+      '@apply',
+      sep1(
+        ' ',
+        choice(
+          seq($.identifier, optional(seq("/", $.integer_value))),
+          sep1(
+            ":",
+            seq(
+              $.identifier,
+              optional(seq("[", $.integer_value, "]"))
+            )
+          ),
+        )
+      ),
+      optional(choice($.important, "#{!important}")),
+      ";"
     ),
 
     // Selectors
