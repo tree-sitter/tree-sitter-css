@@ -47,6 +47,7 @@
 "@namespace" @keyword
 "@supports" @keyword
 "@keyframes" @keyword
+"@apply" @keyword
 (at_keyword) @keyword
 (to) @keyword
 (from) @keyword
@@ -62,3 +63,4 @@
 "#" @punctuation.delimiter
 "," @punctuation.delimiter
 ":" @punctuation.delimiter
+(important_interpolation "#{" @punctuation.bracket)

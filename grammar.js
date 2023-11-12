@@ -125,21 +125,28 @@ module.exports = grammar({
 
     apply_directive: $ => seq(
       '@apply',
-      sep1(
-        ' ',
+      repeat($.class_name),
+      optional(
         choice(
-          seq($.identifier, optional(seq("/", $.integer_value))),
-          sep1(
-            ":",
-            seq(
-              $.identifier,
-              optional(seq("[", $.integer_value, "]"))
-            )
-          ),
+          $.important,
+          $.important_interpolation,
         )
       ),
-      optional(choice($.important, "#{!important}")),
       ";"
+    ),
+
+
+    class_name: $ => sep1(
+      ":",
+      seq(
+        $.identifier,
+        optional(
+          choice(
+            seq("[", $.integer_value, "]"),
+            seq("/", $.integer_value)
+          )
+        )
+      )
     ),
 
     // Selectors
@@ -250,6 +257,8 @@ module.exports = grammar({
     )),
 
     important: $ => '!important',
+
+    important_interpolation: $ => seq("#{", $.important, "}"),
 
     // Media queries
 
