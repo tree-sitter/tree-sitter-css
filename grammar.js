@@ -173,8 +173,22 @@ module.exports = grammar({
     pseudo_class_selector: $ => seq(
       optional($._selector),
       alias($._pseudo_class_selector_colon, ':'),
-      alias($.identifier, $.class_name),
-      optional(alias($.pseudo_class_arguments, $.arguments)),
+      choice(
+        // Either a specific pseudo-class that can only accept a selector…
+        seq(
+          alias(
+            choice('has', 'not', 'is', 'where'),
+            $.class_name,
+          ),
+          alias($.pseudo_class_with_selector_arguments, $.arguments),
+        ),
+        // …or any other pseudo-class (for which we'll allow a more diverse set
+        // of arguments).
+        seq(
+          alias($.identifier, $.class_name),
+          optional(alias($.pseudo_class_arguments, $.arguments)),
+        ),
+      ),
     ),
 
     pseudo_element_selector: $ => seq(
@@ -214,6 +228,12 @@ module.exports = grammar({
     pseudo_class_arguments: $ => seq(
       token.immediate('('),
       sep(',', choice($._selector, repeat1($._value))),
+      ')',
+    ),
+
+    pseudo_class_with_selector_arguments: $ => seq(
+      token.immediate('('),
+      sep(',', $._selector),
       ')',
     ),
 
