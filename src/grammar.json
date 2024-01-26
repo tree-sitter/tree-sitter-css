@@ -653,6 +653,14 @@
                       {
                         "type": "STRING",
                         "value": "not"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "is"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "where"
                       }
                     ]
                   },
@@ -663,7 +671,7 @@
                   "type": "ALIAS",
                   "content": {
                     "type": "SYMBOL",
-                    "name": "pseudo_class_has_or_not_arguments"
+                    "name": "pseudo_class_with_selector_arguments"
                   },
                   "named": true,
                   "value": "arguments"
@@ -1049,7 +1057,7 @@
         }
       ]
     },
-    "pseudo_class_has_or_not_arguments": {
+    "pseudo_class_with_selector_arguments": {
       "type": "SEQ",
       "members": [
         {
