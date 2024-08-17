@@ -67,7 +67,8 @@ bool tree_sitter_css_external_scanner_scan(void *payload, TSLexer *lexer, const 
             }
             lexer->mark_end(lexer);
             // We need a { to be a pseudo class selector, a ; indicates a property
-            while (lexer->lookahead != ';' && lexer->lookahead != '}' && !lexer->eof(lexer)) {
+            while (lexer->lookahead != ';' && lexer->lookahead != '\'' && lexer->lookahead != '}' &&
+                   !lexer->eof(lexer)) {
                 advance(lexer);
                 if (lexer->lookahead == '{') {
                     lexer->result_symbol = PSEUDO_CLASS_SELECTOR_COLON;
