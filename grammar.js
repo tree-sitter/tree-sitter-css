@@ -388,7 +388,7 @@ module.exports = grammar({
       ')',
     ),
 
-    identifier: _ => /(--|-?[a-zA-Z_])[a-zA-Z0-9-_]*/,
+    identifier: _ => /(--|-?[a-zA-Z_\xA0-\xFF])[a-zA-Z0-9-_\xA0-\xFF]*/,
 
     at_keyword: _ => /@[a-zA-Z-_]+/,
 
