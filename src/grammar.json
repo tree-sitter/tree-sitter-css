@@ -1941,7 +1941,7 @@
     },
     "identifier": {
       "type": "PATTERN",
-      "value": "(--|-?[a-zA-Z_])[a-zA-Z0-9-_]*"
+      "value": "(--|-?[a-zA-Z_\\xA0-\\xFF])[a-zA-Z0-9-_\\xA0-\\xFF]*"
     },
     "at_keyword": {
       "type": "PATTERN",
