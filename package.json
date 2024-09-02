@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-css",
-  "version": "0.21.1",
+  "version": "0.23.0",
   "description": "CSS grammar for tree-sitter",
   "repository": "github:tree-sitter/tree-sitter-css",
   "license": "MIT",
