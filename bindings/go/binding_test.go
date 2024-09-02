@@ -3,8 +3,8 @@ package tree_sitter_css_test
 import (
 	"testing"
 
-	tree_sitter "github.com/smacker/go-tree-sitter"
-	"github.com/tree-sitter/tree-sitter-css"
+	tree_sitter "github.com/tree-sitter/go-tree-sitter"
+	tree_sitter_css "github.com/tree-sitter/tree-sitter-css/bindings/go"
 )
 
 func TestCanLoadGrammar(t *testing.T) {
