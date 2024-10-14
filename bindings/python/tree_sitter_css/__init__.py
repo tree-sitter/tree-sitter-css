@@ -1,4 +1,4 @@
-"""Css grammar for tree-sitter"""
+"""CSS grammar for tree-sitter"""
 
 from importlib.resources import files as _files
 

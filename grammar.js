@@ -421,8 +421,7 @@ module.exports = grammar({
  *
  * @param {RuleOrLiteral} rule
  *
- * @return {ChoiceRule}
- *
+ * @returns {ChoiceRule}
  */
 function sep(separator, rule) {
   return optional(sep1(separator, rule));
@@ -435,8 +434,7 @@ function sep(separator, rule) {
  *
  * @param {RuleOrLiteral} rule
  *
- * @return {SeqRule}
- *
+ * @returns {SeqRule}
  */
 function sep1(separator, rule) {
   return seq(rule, repeat(seq(separator, rule)));
