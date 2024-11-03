@@ -200,9 +200,9 @@ module.exports = grammar({
     _nth_child_pseudo_class_selector: $ => seq(
       alias(
         choice('nth-child', 'nth-last-child'),
-        $.class_name
+        $.class_name,
       ),
-      alias($.pseudo_class_nth_child_arguments, $.arguments)
+      alias($.pseudo_class_nth_child_arguments, $.arguments),
     ),
 
     pseudo_element_selector: $ => seq(
@@ -257,18 +257,18 @@ module.exports = grammar({
         alias('even', $.plain_value),
         alias('odd', $.plain_value),
         $.integer_value,
-        alias($._nth_functional_notation, $.plain_value)
+        alias($._nth_functional_notation, $.plain_value),
       ),
       optional(
         seq(
           'of',
-          $._selector
-        )
+          $._selector,
+        ),
       ),
-      ')'
+      ')',
     )),
 
-    // An+B notation
+    // An+B notation for `nth-child`/`nth-last-child`.
     _nth_functional_notation: _ => /-?(\d)*n\s*(\+\s*\d+)?/,
 
     pseudo_element_arguments: $ => seq(
