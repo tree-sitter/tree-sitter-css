@@ -98,7 +98,7 @@ Media statements
       (feature_query (feature_name) (integer_value) (integer_value)))
     (block
       (rule_set
-        (selectors (pseudo_class_selector (class_selector (class_name)) (class_name)))
+        (selectors (pseudo_class_selector (class_selector (class_name (identifier))) (class_name (identifier))))
         (block)))))
 
 ==============================
@@ -132,7 +132,7 @@ Supports statements
     (block))
   (supports_statement
     (unary_query (selector_query (pseudo_class_selector
-      (class_name)
+      (class_name (identifier))
       (arguments (tag_name) (tag_name)))))
     (block)))
 

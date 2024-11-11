@@ -167,7 +167,7 @@ module.exports = grammar({
     class_selector: $ => prec(1, seq(
       optional($._selector),
       '.',
-      alias($.identifier, $.class_name),
+      $.class_name,
     )),
 
     pseudo_class_selector: $ => seq(
@@ -189,7 +189,7 @@ module.exports = grammar({
         // …or any other pseudo-class (for which we'll allow a more diverse set
         // of arguments).
         seq(
-          alias($.identifier, $.class_name),
+          $.class_name,
           optional(alias($.pseudo_class_arguments, $.arguments)),
         ),
       ),
@@ -443,6 +443,11 @@ module.exports = grammar({
       sep(choice(',', ';'), repeat1($._value)),
       ')',
     ),
+
+    class_name: $ => repeat1(choice(
+      $.identifier,
+      $.escape_sequence,
+    )),
 
     identifier: _ => /(--|-?[a-zA-Z_\xA0-\xFF])[a-zA-Z0-9-_\xA0-\xFF]*/,
 

@@ -33,12 +33,12 @@ div.class-b, .class-c.class-d {}
 
 (stylesheet
   (rule_set
-    (selectors (class_selector (class_name)))
+    (selectors (class_selector (class_name (identifier))))
     (block))
   (rule_set
     (selectors
-      (class_selector (tag_name) (class_name))
-      (class_selector (class_selector (class_name)) (class_name)))
+      (class_selector (tag_name) (class_name (identifier)))
+      (class_selector (class_selector (class_name (identifier))) (class_name (identifier))))
     (block)))
 
 =========================
@@ -89,7 +89,7 @@ a:not([href]) {}
 
 (stylesheet
   (rule_set
-    (selectors (pseudo_class_selector (tag_name) (class_name)))
+    (selectors (pseudo_class_selector (tag_name) (class_name (identifier))))
     (block))
   (rule_set
     (selectors (pseudo_class_selector (class_name) (arguments (integer_value))))
@@ -98,25 +98,25 @@ a:not([href]) {}
     (selectors (pseudo_class_selector (tag_name) (class_name) (arguments (tag_name))))
     (block))
   (rule_set
-    (selectors (pseudo_class_selector (tag_name) (class_name) (arguments (class_selector (class_name)))))
+    (selectors (pseudo_class_selector (tag_name) (class_name) (arguments (class_selector (class_name (identifier))))))
     (block))
   (rule_set
-    (selectors (pseudo_class_selector (tag_name) (class_name) (arguments (class_selector (tag_name) (class_name)))))
+    (selectors (pseudo_class_selector (tag_name) (class_name) (arguments (class_selector (tag_name) (class_name (identifier))))))
     (block))
   (rule_set
     (selectors (pseudo_class_selector (universal_selector) (class_name) (arguments (id_selector (tag_name) (id_name)))))
     (block))
   (rule_set
-    (selectors (pseudo_class_selector (tag_name) (class_name) (arguments (class_selector (class_name)) (class_selector (class_name)))))
+    (selectors (pseudo_class_selector (tag_name) (class_name) (arguments (class_selector (class_name (identifier))) (class_selector (class_name (identifier))))))
     (block))
   (rule_set
     (selectors (pseudo_class_selector (tag_name) (class_name) (arguments (attribute_selector (attribute_name)))))
     (block))
   (rule_set
-    (selectors (pseudo_class_selector (class_name) (arguments (pseudo_class_selector (attribute_selector (attribute_name) (string_value (string_content))) (class_name)))))
+    (selectors (pseudo_class_selector (class_name) (arguments (pseudo_class_selector (attribute_selector (attribute_name) (string_value (string_content))) (class_name (identifier))))))
     (block))
   (rule_set
-    (selectors (pseudo_class_selector (class_name) (arguments (plain_value) (class_selector (tag_name) (class_name)))))
+    (selectors (pseudo_class_selector (class_name) (arguments (plain_value) (class_selector (tag_name) (class_name (identifier))))))
     (block))
 )
 
@@ -149,7 +149,7 @@ a:not([href]) {}
     (selectors (pseudo_class_selector (class_name) (arguments (plain_value))))
     (block))
   (rule_set
-    (selectors (pseudo_class_selector (class_name) (arguments (plain_value) (class_selector (tag_name) (class_name)))))
+    (selectors (pseudo_class_selector (class_name) (arguments (plain_value) (class_selector (tag_name) (class_name (identifier))))))
     (block))
 )
 
@@ -242,7 +242,7 @@ a {
   (rule_set
     (selectors (tag_name))
     (block
-      (rule_set (selectors (class_selector (nesting_selector) (class_name))) (block))
+      (rule_set (selectors (class_selector (nesting_selector) (class_name (identifier)))) (block))
       (rule_set (selectors (descendant_selector (nesting_selector) (tag_name))) (block))
       (rule_set (selectors (child_selector (nesting_selector) (tag_name))) (block)))))
 
@@ -258,13 +258,13 @@ a.b ~ c.d {}
 (stylesheet
   (rule_set
     (selectors (sibling_selector
-      (class_selector (tag_name) (class_name))
-      (class_selector (tag_name) (class_name))))
+      (class_selector (tag_name) (class_name (identifier)))
+      (class_selector (tag_name) (class_name (identifier)))))
     (block))
   (rule_set
     (selectors (adjacent_sibling_selector
-      (class_selector (class_selector (class_name)) (class_name))
-      (class_selector (class_selector (class_name)) (class_name))))
+      (class_selector (class_selector (class_name (identifier))) (class_name (identifier)))
+      (class_selector (class_selector (class_name (identifier))) (class_name (identifier)))))
     (block)))
 
 ===========================
@@ -281,11 +281,37 @@ a:not(:hover) {}
     (selectors (pseudo_class_selector
       (tag_name)
       (class_name)
-      (arguments (pseudo_class_selector (class_name)))))
+      (arguments (pseudo_class_selector (class_name (identifier))))))
     (block))
   (rule_set
     (selectors (pseudo_class_selector
-      (class_selector (class_name))
+      (class_selector (class_name (identifier)))
       (class_name)
-      (arguments (child_selector (tag_name) (class_selector (class_name))))))
+      (arguments (child_selector (tag_name) (class_selector (class_name (identifier)))))))
     (block)))
+
+===================
+Escape sequences
+===================
+
+.hover\:bg-blue-600::before {
+	content: "\f123";
+}
+
+---
+
+(stylesheet
+  (rule_set
+    (selectors
+      (pseudo_element_selector
+        (class_selector
+          (class_name
+            (identifier)
+            (escape_sequence)
+            (identifier)))
+        (tag_name)))
+    (block
+      (declaration
+        (property_name)
+        (string_value
+          (escape_sequence))))))
