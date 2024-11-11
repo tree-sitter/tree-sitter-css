@@ -374,15 +374,29 @@ module.exports = grammar({
     string_value: $ => choice(
       seq(
         '\'',
-        alias(/([^'\n]|\\(.|\n))*/, $.string_content),
+        repeat(choice(
+          alias(/[^\\'\n]+/, $.string_content),
+          $.escape_sequence,
+        )),
         '\'',
       ),
       seq(
         '"',
-        alias(/([^"\n]|\\(.|\n))*/, $.string_content),
+        repeat(choice(
+          alias(/[^\\"\n]+/, $.string_content),
+          $.escape_sequence,
+        )),
         '"',
       ),
     ),
+
+    escape_sequence: _ => token(seq(
+      '\\',
+      choice(
+        /[0-9a-fA-F]{1,6}\s?/,
+        /[^0-9a-fA-F\n\r]/,
+      ),
+    )),
 
     integer_value: $ => seq(
       token(seq(
