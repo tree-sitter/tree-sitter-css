@@ -11,11 +11,11 @@ Import statements
 ---
 
 (stylesheet
-  (import_statement (call_expression (function_name) (arguments (string_value))) (keyword_query))
-  (import_statement (call_expression (function_name) (arguments (string_value))) (keyword_query))
-  (import_statement (string_value))
-  (import_statement (call_expression (function_name) (arguments (string_value))))
-  (import_statement (string_value) (keyword_query)))
+  (import_statement (call_expression (function_name) (arguments (string_value (string_content)))) (keyword_query))
+  (import_statement (call_expression (function_name) (arguments (string_value (string_content)))) (keyword_query))
+  (import_statement (string_value (string_content)))
+  (import_statement (call_expression (function_name) (arguments (string_value (string_content)))))
+  (import_statement (string_value (string_content)) (keyword_query)))
 
 ==============================
 Namespace statements
@@ -36,12 +36,12 @@ Namespace statements
 (stylesheet
   (comment)
   (namespace_statement (call_expression (function_name) (arguments (plain_value))))
-  (namespace_statement (string_value))
+  (namespace_statement (string_value (string_content)))
   (namespace_statement (call_expression (function_name) (arguments (plain_value))))
   (namespace_statement (namespace_name) (call_expression (function_name) (arguments (plain_value))))
   (comment)
   (namespace_statement (namespace_name) (call_expression (function_name) (arguments (plain_value))))
-  (namespace_statement (namespace_name) (string_value)))
+  (namespace_statement (namespace_name) (string_value (string_content))))
 
 ==============================
 Keyframes statements
@@ -145,7 +145,7 @@ Charset statements
 ---
 
 (stylesheet
-  (charset_statement (string_value)))
+  (charset_statement (string_value (string_content))))
 
 ==============================
 Other at-statements
@@ -162,9 +162,9 @@ Other at-statements
   (at_rule
     (at_keyword)
     (block
-      (declaration (property_name) (string_value))
+      (declaration (property_name) (string_value (string_content)))
       (declaration (property_name)
-        (call_expression (function_name) (arguments (string_value)))
-        (call_expression (function_name) (arguments (string_value)))
-        (call_expression (function_name) (arguments (string_value)))
-        (call_expression (function_name) (arguments (string_value)))))))
+        (call_expression (function_name) (arguments (string_value (string_content))))
+        (call_expression (function_name) (arguments (string_value (string_content))))
+        (call_expression (function_name) (arguments (string_value (string_content))))
+        (call_expression (function_name) (arguments (string_value (string_content))))))))
