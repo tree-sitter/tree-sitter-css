@@ -152,8 +152,8 @@ a {
   (rule_set
     (selectors (tag_name))
     (block
-      (declaration (property_name) (string_value (string_content)))
-      (declaration (property_name) (string_value (string_content))))))
+      (declaration (property_name) (string_value))
+      (declaration (property_name) (string_value (escape_sequence) (string_content) (escape_sequence))))))
 
 ============================
 URLs
@@ -308,7 +308,7 @@ PostCSS
 
 (stylesheet
   (rule_set
-    (selectors (class_selector (class_name)))
+    (selectors (class_selector (class_name (identifier))))
     (block
       (postcss_statement
         (at_keyword)
@@ -321,7 +321,7 @@ PostCSS
     (keyword_query)
     (block
       (rule_set
-        (selectors (class_selector (class_name)))
+        (selectors (class_selector (class_name (identifier))))
         (block
           (postcss_statement
             (at_keyword)
