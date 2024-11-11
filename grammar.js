@@ -220,7 +220,7 @@ module.exports = grammar({
 
     attribute_selector: $ => seq(
       optional($._selector),
-      '[',
+      token(prec(1, '[')),
       alias(choice($.identifier, $.namespace_selector), $.attribute_name),
       optional(seq(
         choice('=', '~=', '^=', '|=', '*=', '$='),
