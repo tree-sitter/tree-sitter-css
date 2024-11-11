@@ -177,11 +177,15 @@ module.exports = grammar({
         // Either a specific pseudo-class that can only accept a selector…
         seq(
           alias(
-            choice('has', 'not', 'is', 'where'),
+            choice('has', 'not', 'is', 'where', 'host', 'host-context'),
             $.class_name,
           ),
           alias($.pseudo_class_with_selector_arguments, $.arguments),
         ),
+        // …or an `nth-child` or `nth-last-child` selector (which can
+        // optionally accept a selector)…
+        $._nth_child_pseudo_class_selector,
+
         // …or any other pseudo-class (for which we'll allow a more diverse set
         // of arguments).
         seq(
@@ -189,6 +193,16 @@ module.exports = grammar({
           optional(alias($.pseudo_class_arguments, $.arguments)),
         ),
       ),
+    ),
+
+    // Only `nth-child`/`nth-last-child`, not `nth-of-type`/`nth-last-of-type`,
+    // allows an optional filtering selector as a parameter.
+    _nth_child_pseudo_class_selector: $ => seq(
+      alias(
+        choice('nth-child', 'nth-last-child'),
+        $.class_name,
+      ),
+      alias($.pseudo_class_nth_child_arguments, $.arguments),
     ),
 
     pseudo_element_selector: $ => seq(
@@ -236,6 +250,26 @@ module.exports = grammar({
       sep(',', $._selector),
       ')',
     ),
+
+    pseudo_class_nth_child_arguments: $ => prec(-1, seq(
+      token.immediate('('),
+      choice(
+        alias('even', $.plain_value),
+        alias('odd', $.plain_value),
+        $.integer_value,
+        alias($._nth_functional_notation, $.plain_value),
+      ),
+      optional(
+        seq(
+          'of',
+          $._selector,
+        ),
+      ),
+      ')',
+    )),
+
+    // An+B notation for `nth-child`/`nth-last-child`.
+    _nth_functional_notation: _ => /-?(\d)*n\s*(\+\s*\d+)?/,
 
     pseudo_element_arguments: $ => seq(
       token.immediate('('),

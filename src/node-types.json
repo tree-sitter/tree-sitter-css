@@ -2142,6 +2142,10 @@
     "named": false
   },
   {
+    "type": "of",
+    "named": false
+  },
+  {
     "type": "only",
     "named": false
   },
