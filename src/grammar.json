@@ -672,13 +672,21 @@
                   "value": "class_name"
                 },
                 {
-                  "type": "ALIAS",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "pseudo_class_with_selector_arguments"
-                  },
-                  "named": true,
-                  "value": "arguments"
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "ALIAS",
+                      "content": {
+                        "type": "SYMBOL",
+                        "name": "pseudo_class_with_selector_arguments"
+                      },
+                      "named": true,
+                      "value": "arguments"
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
                 }
               ]
             },

@@ -180,7 +180,7 @@ module.exports = grammar({
             choice('has', 'not', 'is', 'where', 'host', 'host-context'),
             $.class_name,
           ),
-          alias($.pseudo_class_with_selector_arguments, $.arguments),
+          optional(alias($.pseudo_class_with_selector_arguments, $.arguments)),
         ),
         // …or an `nth-child` or `nth-last-child` selector (which can
         // optionally accept a selector)…
