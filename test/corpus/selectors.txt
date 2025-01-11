@@ -84,6 +84,10 @@ p:has(li.foo) {}
 p:has(.foo, .bar) {}
 a:not([href]) {}
 :host([a="b"]:hover) {}
+:host([a='b']:hover) {}
+:host {}
+:host { display: block; }
+:host(div.foo) {}
 :nth-child(2n of a.external) {}
 ---
 
@@ -116,9 +120,20 @@ a:not([href]) {}
     (selectors (pseudo_class_selector (class_name) (arguments (pseudo_class_selector (attribute_selector (attribute_name) (string_value (string_content))) (class_name (identifier))))))
     (block))
   (rule_set
-    (selectors (pseudo_class_selector (class_name) (arguments (plain_value) (class_selector (tag_name) (class_name (identifier))))))
+    (selectors (pseudo_class_selector (class_name) (arguments (pseudo_class_selector (attribute_selector (attribute_name) (string_value (string_content))) (class_name (identifier))))))
     (block))
-)
+  (rule_set
+    (selectors (pseudo_class_selector (class_name)))
+    (block))
+  (rule_set
+    (selectors (pseudo_class_selector (class_name)))
+    (block (declaration (property_name) (plain_value))))
+  (rule_set
+    (selectors (pseudo_class_selector (class_name) (arguments (class_selector (tag_name) (class_name (identifier))))))
+    (block))
+  (rule_set
+    (selectors (pseudo_class_selector (class_name) (arguments (plain_value) (class_selector (tag_name) (class_name (identifier))))))
+    (block)))
 
 =========================
 :nth-child and :nth-last-child selectors
