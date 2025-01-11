@@ -182,6 +182,7 @@ module.exports = grammar({
           ),
           alias($.pseudo_class_with_selector_arguments, $.arguments),
         ),
+
         // …or an `nth-child` or `nth-last-child` selector (which can
         // optionally accept a selector)…
         $._nth_child_pseudo_class_selector,
@@ -192,6 +193,9 @@ module.exports = grammar({
           $.class_name,
           optional(alias($.pseudo_class_arguments, $.arguments)),
         ),
+
+        // …or a standalone `host` pseudo-class (as `:host` doesn't require arguments).
+        alias('host', $.class_name),
       ),
     ),
 
