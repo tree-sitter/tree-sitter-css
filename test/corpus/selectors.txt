@@ -305,6 +305,58 @@ a:not(:hover) {}
       (arguments (child_selector (tag_name) (class_selector (class_name (identifier)))))))
     (block)))
 
+===========================
+Nested combinators
+===========================
+
+.parent {
+	>p {}
+	>* {}
+	~div {}
+	+p {}
+	space-element {}
+	| ns-element {}
+}
+
+---
+
+(stylesheet
+  (rule_set
+    (selectors
+      (class_selector
+        (class_name
+          (identifier))))
+    (block
+      (rule_set
+        (selectors
+          (child_selector
+            (tag_name)))
+        (block))
+      (rule_set
+        (selectors
+          (child_selector
+            (universal_selector)))
+        (block))
+      (rule_set
+        (selectors
+          (sibling_selector
+            (tag_name)))
+        (block))
+      (rule_set
+        (selectors
+          (adjacent_sibling_selector
+            (tag_name)))
+        (block))
+      (rule_set
+        (selectors
+          (tag_name))
+        (block))
+      (rule_set
+        (selectors
+          (namespace_selector
+            (tag_name)))
+        (block)))))
+
 ===================
 Escape sequences
 ===================

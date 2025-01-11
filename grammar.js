@@ -233,15 +233,15 @@ module.exports = grammar({
       ']',
     ),
 
-    child_selector: $ => prec.left(seq($._selector, '>', $._selector)),
+    child_selector: $ => prec.left(seq(optional($._selector), '>', $._selector)),
 
     descendant_selector: $ => prec.left(seq($._selector, $._descendant_operator, $._selector)),
 
-    sibling_selector: $ => prec.left(seq($._selector, '~', $._selector)),
+    sibling_selector: $ => prec.left(seq(optional($._selector), '~', $._selector)),
 
-    adjacent_sibling_selector: $ => prec.left(seq($._selector, '+', $._selector)),
+    adjacent_sibling_selector: $ => prec.left(seq(optional($._selector), '+', $._selector)),
 
-    namespace_selector: $ => prec.left(seq($._selector, '|', $._selector)),
+    namespace_selector: $ => prec.left(seq(optional($._selector), '|', $._selector)),
 
     pseudo_class_arguments: $ => seq(
       token.immediate('('),
