@@ -29,7 +29,11 @@ module.exports = grammar({
   ],
 
   rules: {
-    stylesheet: $ => repeat($._top_level_item),
+    stylesheet: $ => seq(
+      optional('`'),
+      repeat($._top_level_item),
+      optional('`'),
+    ),
 
     _top_level_item: $ => choice(
       $.declaration,
@@ -459,10 +463,16 @@ module.exports = grammar({
 
     js_comment: _ => token(prec(-1, seq('//', /.*/))),
 
-    comment: _ => token(seq(
-      '/*',
-      /[^*]*\*+([^/*][^*]*\*+)*/,
-      '/',
+    comment: _ => token(choice(
+      seq(
+        '/*',
+        /[^*]*\*+([^/*][^*]*\*+)*/,
+        '/',
+      ),
+      seq(
+        '${',
+        /.*/,
+        '}'),
     )),
 
     plain_value: _ => token(seq(
