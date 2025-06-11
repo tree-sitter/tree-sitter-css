@@ -69,7 +69,7 @@ bool tree_sitter_css_external_scanner_scan(void *payload, TSLexer *lexer, const 
             // Skip js content: ${}
             while (iswspace(lexer->lookahead)) {
                 advance(lexer);
-                if (lexer->lookahead == '$' || iswalnum(lexer->lookahead)) {
+                if (lexer->lookahead == '$' || lexer->lookahead == '/' || iswalnum(lexer->lookahead)) {
                     return false;
                 }
             }
