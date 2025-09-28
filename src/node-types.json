@@ -517,6 +517,10 @@
           "named": true
         },
         {
+          "type": "scope_statement",
+          "named": true
+        },
+        {
           "type": "supports_statement",
           "named": true
         }
@@ -1476,6 +1480,10 @@
           "named": true
         },
         {
+          "type": "important_value",
+          "named": true
+        },
+        {
           "type": "integer_value",
           "named": true
         },
@@ -1654,6 +1662,77 @@
         },
         {
           "type": "selectors",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "scope_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "adjacent_sibling_selector",
+          "named": true
+        },
+        {
+          "type": "attribute_selector",
+          "named": true
+        },
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "child_selector",
+          "named": true
+        },
+        {
+          "type": "class_selector",
+          "named": true
+        },
+        {
+          "type": "descendant_selector",
+          "named": true
+        },
+        {
+          "type": "id_selector",
+          "named": true
+        },
+        {
+          "type": "namespace_selector",
+          "named": true
+        },
+        {
+          "type": "nesting_selector",
+          "named": true
+        },
+        {
+          "type": "pseudo_class_selector",
+          "named": true
+        },
+        {
+          "type": "pseudo_element_selector",
+          "named": true
+        },
+        {
+          "type": "sibling_selector",
+          "named": true
+        },
+        {
+          "type": "string_value",
+          "named": true
+        },
+        {
+          "type": "tag_name",
+          "named": true
+        },
+        {
+          "type": "universal_selector",
           "named": true
         }
       ]
@@ -1921,6 +2000,10 @@
           "named": true
         },
         {
+          "type": "scope_statement",
+          "named": true
+        },
+        {
           "type": "supports_statement",
           "named": true
         }
@@ -1965,6 +2048,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "to",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "unary_query",
@@ -2099,6 +2187,10 @@
     "named": false
   },
   {
+    "type": "@scope",
+    "named": false
+  },
+  {
     "type": "@supports",
     "named": false
   },
@@ -2124,7 +2216,8 @@
   },
   {
     "type": "comment",
-    "named": true
+    "named": true,
+    "extra": true
   },
   {
     "type": "escape_sequence",
@@ -2155,8 +2248,13 @@
     "named": true
   },
   {
-    "type": "js_comment",
+    "type": "important_value",
     "named": true
+  },
+  {
+    "type": "js_comment",
+    "named": true,
+    "extra": true
   },
   {
     "type": "keyframes_name",
@@ -2212,7 +2310,7 @@
   },
   {
     "type": "to",
-    "named": true
+    "named": false
   },
   {
     "type": "unit",
