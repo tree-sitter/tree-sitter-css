@@ -8,7 +8,7 @@
 /// <reference types="tree-sitter-cli/dsl" />
 // @ts-check
 
-module.exports = grammar({
+export default grammar({
   name: 'css',
 
   extras: $ => [
@@ -461,10 +461,13 @@ module.exports = grammar({
       ')',
     ),
 
-    class_name: $ => repeat1(choice(
-      $.identifier,
-      $.escape_sequence,
-    )),
+    class_name: $ => seq(
+      choice($.identifier, $.escape_sequence),
+      repeat(choice(
+        alias(/[a-zA-Z0-9-_\xA0-\xFF]+/, $.identifier),
+        $.escape_sequence,
+      )),
+    ),
 
     identifier: _ => /(--|-?[a-zA-Z_\xA0-\xFF])[a-zA-Z0-9-_\xA0-\xFF]*/,
 
