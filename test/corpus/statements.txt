@@ -53,6 +53,10 @@ Keyframes statements
   to   { margin-top: 100px; }
 }
 
+@keyframes hello {
+  0%, 50% {}
+}
+
 ---
 
 (stylesheet
@@ -60,7 +64,9 @@ Keyframes statements
     (keyframe_block (from) (block (declaration (property_name) (integer_value (unit)))))
     (keyframe_block (integer_value (unit)) (block (declaration (property_name) (integer_value (unit)) (important))))
     (comment)
-    (keyframe_block (to) (block (declaration (property_name) (integer_value (unit))))))))
+    (keyframe_block (to) (block (declaration (property_name) (integer_value (unit)))))))
+  (keyframes_statement (keyframes_name) (keyframe_block_list
+    (keyframe_block (integer_value (unit)) (integer_value (unit)) (block)))))
 
 ==============================
 Media statements
