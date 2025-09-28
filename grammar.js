@@ -114,7 +114,7 @@ export default grammar({
 
     postcss_statement: $ => prec(-1, seq(
       $.at_keyword,
-      repeat($._value),
+      repeat(choice($._value, $.important_value)),
       ';',
     )),
 
@@ -491,6 +491,12 @@ export default grammar({
         /[^/\s,;!{}()\[\]]/, // Not a slash, not a delimiter character
         /\/[^\*\s,;!{}()\[\]]/, // Slash not followed by a '*' (which would be a comment)
       )),
+    )),
+
+    important_value: _ => token(seq(
+      '!',
+      /[a-zA-Z]/,
+      repeat(/[a-zA-Z0-9-_]/),
     )),
   },
 });
