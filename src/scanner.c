@@ -67,11 +67,25 @@ bool tree_sitter_css_external_scanner_scan(void *payload, TSLexer *lexer, const 
             }
             lexer->mark_end(lexer);
             lexer->result_symbol = PSEUDO_CLASS_SELECTOR_COLON;
-            // We need a { to be a pseudo class selector, a ; indicates a property
+
+            // We need a `{` to be a pseudo class selector, a `;` indicates a property.
+            // This does not apply if we're in a comment, however.
+            bool in_comment = false;
             while (lexer->lookahead != ';' && lexer->lookahead != '}' && !lexer->eof(lexer)) {
                 advance(lexer);
-                if (lexer->lookahead == '{') {
+                if (lexer->lookahead == '{' && !in_comment) {
                     return true;
+                }
+                if (lexer->lookahead == '/' && !in_comment) {
+                    advance(lexer);
+                    if (lexer->lookahead == '*') {
+                        in_comment = true;
+                    }
+                } else if (lexer->lookahead == '*' && in_comment) {
+                    advance(lexer);
+                    if (lexer->lookahead == '/') {
+                        in_comment = false;
+                    }
                 }
             }
 
