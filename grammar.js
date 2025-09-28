@@ -40,6 +40,7 @@ module.exports = grammar({
       $.namespace_statement,
       $.keyframes_statement,
       $.supports_statement,
+      $.scope_statement,
       $.at_rule,
     ),
 
@@ -100,6 +101,17 @@ module.exports = grammar({
       $.block,
     ),
 
+    scope_statement: $ => seq(
+      '@scope',
+      optional(
+        seq(
+          '(', $._selector, ')',
+          optional(seq('to', '(', $._selector, ')')),
+        ),
+      ),
+      $.block,
+    ),
+
     postcss_statement: $ => prec(-1, seq(
       $.at_keyword,
       repeat($._value),
@@ -137,6 +149,7 @@ module.exports = grammar({
       $.namespace_statement,
       $.keyframes_statement,
       $.supports_statement,
+      $.scope_statement,
       $.postcss_statement,
       $.at_rule,
     ),
