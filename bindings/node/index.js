@@ -1,11 +1,15 @@
-const root = require("path").join(__dirname, "..", "..");
+import { fileURLToPath } from "node:url";
 
-module.exports =
-  typeof process.versions.bun === "string"
-    // Support `bun build --compile` by being statically analyzable enough to find the .node file at build-time
-    ? require(`../../prebuilds/${process.platform}-${process.arch}/tree-sitter-css.node`)
-    : require("node-gyp-build")(root);
+const root = fileURLToPath(new URL("../..", import.meta.url));
+
+const binding = typeof process.versions.bun === "string"
+  // Support `bun build --compile` by being statically analyzable enough to find the .node file at build-time
+  ? await import(`${root}/prebuilds/${process.platform}-${process.arch}/tree-sitter-css.node`)
+  : (await import("node-gyp-build")).default(root);
 
 try {
-  module.exports.nodeTypeInfo = require("../../src/node-types.json");
+  const nodeTypes = await import(`${root}/src/node-types.json`, {with: {type: "json"}});
+  binding.nodeTypeInfo = nodeTypes.default;
 } catch (_) {}
+
+export default binding;
