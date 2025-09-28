@@ -1,6 +1,6 @@
 LANGUAGE_NAME := tree-sitter-css
 HOMEPAGE_URL := https://github.com/tree-sitter/tree-sitter-css
-VERSION := 0.23.2
+VERSION := 0.25.0
 
 # repository
 SRC_DIR := src

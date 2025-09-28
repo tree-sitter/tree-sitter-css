@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-css",
-  "version": "0.23.2",
+  "version": "0.25.0",
   "description": "CSS grammar for tree-sitter",
   "type": "module",
   "repository": {
