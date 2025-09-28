@@ -365,6 +365,8 @@ Escape sequences
 	content: "\f123";
 }
 
+.a\.5 {}
+
 ---
 
 (stylesheet
@@ -381,4 +383,12 @@ Escape sequences
       (declaration
         (property_name)
         (string_value
-          (escape_sequence))))))
+          (escape_sequence)))))
+  (rule_set
+    (selectors
+      (class_selector
+        (class_name
+          (identifier)
+          (escape_sequence)
+          (identifier))))
+    (block)))
