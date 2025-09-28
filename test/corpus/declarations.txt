@@ -300,7 +300,12 @@ PostCSS
 
 @layer components {
   .btn-blue {
-    @apply --mixin sm:space-x-0 left-[11%] border-foreground/20 !important;
+    @apply --mixin sm:space-x-0 left-[11%] border-foreground/20 !important !text-white;
+  }
+}
+
+@layer utilities {
+  .btn {
   }
 }
 
@@ -330,4 +335,15 @@ PostCSS
             (plain_value)
             (grid_value (integer_value (unit)))
             (plain_value)
-            (important)))))))
+            (important)
+            (important_value))))))
+  (at_rule
+      (at_keyword)
+      (keyword_query)
+      (block
+        (rule_set
+          (selectors
+            (class_selector
+              (class_name
+                (identifier))))
+          (block)))))
