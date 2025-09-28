@@ -1,7 +1,7 @@
 /**
  * @file CSS grammar for tree-sitter
  * @author Max Brunsfeld <maxbrunsfeld@gmail.com>
- * @author Amaan Qureshi <amaanq12@gmail.com>
+ * @author Amaan Qureshi <contact@amaanq.com>
  * @license MIT
  */
 

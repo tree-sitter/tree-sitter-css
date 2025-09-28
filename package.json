@@ -2,22 +2,21 @@
   "name": "tree-sitter-css",
   "version": "0.23.2",
   "description": "CSS grammar for tree-sitter",
-  "repository": "https://github.com/tree-sitter/tree-sitter-css",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tree-sitter/tree-sitter-css.git"
+  },
+  "funding": "https://github.com/sponsors/tree-sitter",
   "license": "MIT",
   "author": {
     "name": "Max Brunsfeld",
     "email": "maxbrunsfeld@gmail.com"
   },
-  "contributors": [
-    {
-      "name": "Amaan Qureshi",
-      "email": "amaanq12@gmail.com"
-    }
-  ],
   "maintainers": [
     {
       "name": "Amaan Qureshi",
-      "email": "amaanq12@gmail.com"
+      "email": "contact@amaanq.com"
     }
   ],
   "main": "bindings/node",
@@ -39,17 +38,17 @@
     "*.wasm"
   ],
   "dependencies": {
-    "node-addon-api": "^8.2.2",
-    "node-gyp-build": "^4.8.2"
+    "node-addon-api": "^8.5.0",
+    "node-gyp-build": "^4.8.4"
   },
   "devDependencies": {
     "eslint": ">=9.14.0",
     "eslint-config-treesitter": "^1.0.2",
     "prebuildify": "^6.0.1",
-    "tree-sitter-cli": "^0.24.4"
+    "tree-sitter-cli": "^0.25.10"
   },
   "peerDependencies": {
-    "tree-sitter": "^0.22.4"
+    "tree-sitter": "^0.25.0"
   },
   "peerDependenciesMeta": {
     "tree-sitter": {

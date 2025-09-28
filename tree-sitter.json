@@ -1,10 +1,11 @@
 {
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
   "grammars": [
     {
       "name": "css",
       "camelcase": "CSS",
+      "title": "CSS",
       "scope": "source.css",
-      "path": ".",
       "file-types": [
         "css"
       ],
@@ -23,11 +24,12 @@
       },
       {
         "name": "Amaan Qureshi",
-        "email": "amaanq12@gmail.com"
+        "email": "contact@amaanq.com"
       }
     ],
     "links": {
-      "repository": "https://github.com/tree-sitter/tree-sitter-css"
+      "repository": "https://github.com/tree-sitter/tree-sitter-css",
+      "funding": "https://github.com/sponsors/tree-sitter"
     }
   },
   "bindings": {
