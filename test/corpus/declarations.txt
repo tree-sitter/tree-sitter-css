@@ -347,3 +347,22 @@ PostCSS
               (class_name
                 (identifier))))
           (block)))))
+
+==============================
+Comments in declarations
+==============================
+
+& {
+  position: /*${}*/ relative;
+}
+
+---
+
+(stylesheet
+  (rule_set
+    (selectors (nesting_selector))
+    (block
+      (declaration
+        (property_name)
+        (comment)
+        (plain_value)))))
