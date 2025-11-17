@@ -1586,8 +1586,17 @@
       }
     },
     "important": {
-      "type": "STRING",
-      "value": "!important"
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "!"
+        },
+        {
+          "type": "STRING",
+          "value": "important"
+        }
+      ]
     },
     "_query": {
       "type": "CHOICE",

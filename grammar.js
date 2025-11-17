@@ -319,7 +319,7 @@ export default grammar({
       optional($.important),
     )),
 
-    important: _ => '!important',
+    important: _ => seq('!', 'important'),
 
     // Media queries
 
