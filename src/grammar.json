@@ -1461,9 +1461,26 @@
         }
       ]
     },
-    "declaration": {
+    "_property_name": {
       "type": "SEQ",
       "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "universal_selector"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          "named": true,
+          "value": "css_hack_star"
+        },
         {
           "type": "ALIAS",
           "content": {
@@ -1472,6 +1489,15 @@
           },
           "named": true,
           "value": "property_name"
+        }
+      ]
+    },
+    "declaration": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_property_name"
         },
         {
           "type": "STRING",
@@ -1530,13 +1556,8 @@
         "type": "SEQ",
         "members": [
           {
-            "type": "ALIAS",
-            "content": {
-              "type": "SYMBOL",
-              "name": "identifier"
-            },
-            "named": true,
-            "value": "property_name"
+            "type": "SYMBOL",
+            "name": "_property_name"
           },
           {
             "type": "STRING",

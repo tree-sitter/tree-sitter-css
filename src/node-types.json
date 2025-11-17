@@ -760,6 +760,11 @@
     "fields": {}
   },
   {
+    "type": "css_hack_star",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "declaration",
     "named": true,
     "fields": {},
@@ -777,6 +782,10 @@
         },
         {
           "type": "color_value",
+          "named": true
+        },
+        {
+          "type": "css_hack_star",
           "named": true
         },
         {

@@ -296,8 +296,13 @@ export default grammar({
 
     // Declarations
 
-    declaration: $ => seq(
+    _property_name: $ => seq(
+      alias(optional($.universal_selector), $.css_hack_star),
       alias($.identifier, $.property_name),
+    ),
+
+    declaration: $ => seq(
+      $._property_name,
       ':',
       $._value,
       repeat(seq(
@@ -309,7 +314,7 @@ export default grammar({
     ),
 
     last_declaration: $ => prec(1, seq(
-      alias($.identifier, $.property_name),
+      $._property_name,
       ':',
       $._value,
       repeat(seq(
