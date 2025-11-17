@@ -192,7 +192,7 @@
             },
             {
               "type": "SYMBOL",
-              "name": "call_expression"
+              "name": "url_expression"
             }
           ]
         },
@@ -1803,6 +1803,10 @@
           },
           {
             "type": "SYMBOL",
+            "name": "url_expression"
+          },
+          {
+            "type": "SYMBOL",
             "name": "important"
           }
         ]
@@ -2280,6 +2284,44 @@
         }
       ]
     },
+    "url_expression": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[uU][rR][lL]"
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "FIELD",
+          "name": "value",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "plain_url"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "plain_value"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "string_value"
+              }
+            ]
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
     "class_name": {
       "type": "SEQ",
       "members": [
@@ -2409,6 +2451,13 @@
             }
           }
         ]
+      }
+    },
+    "plain_url": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "([!#$%&*-~]|\\\\[^\\r\\n\\f0-9a-f])+"
       }
     },
     "important_value": {

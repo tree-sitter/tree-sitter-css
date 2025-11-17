@@ -68,7 +68,7 @@ export default grammar({
     namespace_statement: $ => seq(
       '@namespace',
       optional(alias($.identifier, $.namespace_name)),
-      choice($.string_value, $.call_expression),
+      choice($.string_value, $.url_expression),
       ';',
     ),
 
@@ -377,6 +377,7 @@ export default grammar({
       $.binary_expression,
       $.parenthesized_value,
       $.call_expression,
+      $.url_expression,
       $.important,
     )),
 
@@ -461,6 +462,16 @@ export default grammar({
       ')',
     ),
 
+    url_expression: $ => seq(
+      /[uU][rR][lL]/, '(',
+      field('value', choice(
+        $.plain_url,
+        $.plain_value,
+        $.string_value,
+      )),
+      ')'
+    ),
+
     class_name: $ => seq(
       choice($.identifier, $.escape_sequence),
       repeat(choice(
@@ -492,6 +503,12 @@ export default grammar({
         /\/[^\*\s,;!{}()\[\]]/, // Slash not followed by a '*' (which would be a comment)
       )),
     )),
+
+    plain_url: _ => token(
+      // Regex derived from https://www.w3.org/TR/CSS2/grammar.html
+      // TODO: add support for non-ASCII characters also allowed by the specs
+      /([!#$%&*-~]|\\[^\r\n\f0-9a-f])+/
+    ),
 
     important_value: _ => token(seq(
       '!',

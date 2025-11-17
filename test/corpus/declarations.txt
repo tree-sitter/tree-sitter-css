@@ -10,15 +10,18 @@ a {
 
 (stylesheet
   (rule_set
-    (selectors (tag_name))
+    (selectors
+      (tag_name))
     (block
       (declaration
         (property_name)
-        (call_expression (function_name) (arguments
-          (integer_value)
-          (integer_value)
-          (integer_value)
-          (float_value)))))))
+        (call_expression
+          (function_name)
+          (arguments
+            (integer_value)
+            (integer_value)
+            (integer_value)
+            (float_value)))))))
 
 =============================================
 Calls where each argument has multiple values
@@ -32,32 +35,56 @@ div {
 ---
 
 (stylesheet
-  (rule_set (selectors (tag_name)) (block
-    (declaration
-      (property_name)
-      (call_expression (function_name) (arguments
-        (plain_value)
-        (plain_value)
-        (integer_value (unit)))))
-    (declaration
-      (property_name)
-      (call_expression (function_name) (arguments
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))))))))
+  (rule_set
+    (selectors
+      (tag_name))
+    (block
+      (declaration
+        (property_name)
+        (call_expression
+          (function_name)
+          (arguments
+            (plain_value)
+            (plain_value)
+            (integer_value
+              (unit)))))
+      (declaration
+        (property_name)
+        (call_expression
+          (function_name)
+          (arguments
+            (integer_value
+              (unit))
+            (integer_value
+              (unit))
+            (integer_value
+              (unit))
+            (integer_value
+              (unit))
+            (integer_value
+              (unit))
+            (integer_value
+              (unit))
+            (integer_value
+              (unit))
+            (integer_value
+              (unit))
+            (integer_value
+              (unit))
+            (integer_value
+              (unit))
+            (integer_value
+              (unit))
+            (integer_value
+              (unit))
+            (integer_value
+              (unit))
+            (integer_value
+              (unit))
+            (integer_value
+              (unit))
+            (integer_value
+              (unit))))))))
 
 ============================
 Color literals
@@ -72,10 +99,15 @@ a {
 
 (stylesheet
   (rule_set
-    (selectors (tag_name))
+    (selectors
+      (tag_name))
     (block
-      (declaration (property_name) (color_value))
-      (declaration (property_name) (color_value)))))
+      (declaration
+        (property_name)
+        (color_value))
+      (declaration
+        (property_name)
+        (color_value)))))
 
 ============================
 Numbers
@@ -93,13 +125,34 @@ a {
 ---
 
 (stylesheet
-  (rule_set (selectors (tag_name)) (block
-    (declaration (property_name) (float_value (unit)))
-    (declaration (property_name) (integer_value (unit)))
-    (declaration (property_name) (float_value (unit)))
-    (declaration (property_name) (float_value (unit)))
-    (declaration (property_name) (integer_value (unit)))
-    (declaration (property_name) (float_value (unit))))))
+  (rule_set
+    (selectors
+      (tag_name))
+    (block
+      (declaration
+        (property_name)
+        (float_value
+          (unit)))
+      (declaration
+        (property_name)
+        (integer_value
+          (unit)))
+      (declaration
+        (property_name)
+        (float_value
+          (unit)))
+      (declaration
+        (property_name)
+        (float_value
+          (unit)))
+      (declaration
+        (property_name)
+        (integer_value
+          (unit)))
+      (declaration
+        (property_name)
+        (float_value
+          (unit))))))
 
 ============================
 Binary arithmetic operators
@@ -115,14 +168,24 @@ a {
 
 (stylesheet
   (rule_set
-    (selectors (tag_name))
+    (selectors
+      (tag_name))
     (block
       (declaration
         (property_name)
-        (call_expression (function_name) (arguments (binary_expression (integer_value (unit)) (integer_value (unit))))))
+        (call_expression
+          (function_name)
+          (arguments
+            (binary_expression
+              (integer_value
+                (unit))
+              (integer_value
+                (unit))))))
       (declaration
         (property_name)
-        (binary_expression (integer_value) (integer_value)))
+        (binary_expression
+          (integer_value)
+          (integer_value)))
       (declaration
         (property_name)
         (call_expression
@@ -130,12 +193,24 @@ a {
           (arguments
             (binary_expression
               (binary_expression
-                (integer_value (unit))
-                (parenthesized_value (binary_expression (integer_value) (integer_value))))
+                (integer_value
+                  (unit))
+                (parenthesized_value
+                  (binary_expression
+                    (integer_value)
+                    (integer_value))))
               (parenthesized_value
                 (binary_expression
-                  (parenthesized_value (binary_expression (integer_value (unit)) (integer_value (unit))))
-                  (parenthesized_value (binary_expression (integer_value) (integer_value))))))))))))
+                  (parenthesized_value
+                    (binary_expression
+                      (integer_value
+                        (unit))
+                      (integer_value
+                        (unit))))
+                  (parenthesized_value
+                    (binary_expression
+                      (integer_value)
+                      (integer_value))))))))))))
 
 ============================
 Strings
@@ -150,10 +225,18 @@ a {
 
 (stylesheet
   (rule_set
-    (selectors (tag_name))
+    (selectors
+      (tag_name))
     (block
-      (declaration (property_name) (string_value))
-      (declaration (property_name) (string_value (escape_sequence) (string_content) (escape_sequence))))))
+      (declaration
+        (property_name)
+        (string_value))
+      (declaration
+        (property_name)
+        (string_value
+          (escape_sequence)
+          (string_content)
+          (escape_sequence))))))
 
 ============================
 URLs
@@ -161,15 +244,23 @@ URLs
 
 a {
   b: http://something-else?foo=bar;
+  background: UrL(../test.png);
 }
 
 ---
 
 (stylesheet
   (rule_set
-    (selectors (tag_name))
+    (selectors
+      (tag_name))
     (block
-      (declaration (property_name) (plain_value)))))
+      (declaration
+        (property_name)
+        (plain_value))
+      (declaration
+        (property_name)
+        (url_expression
+          (plain_url))))))
 
 ============================
 Important declarations
@@ -183,9 +274,13 @@ a {
 
 (stylesheet
   (rule_set
-    (selectors (tag_name))
+    (selectors
+      (tag_name))
     (block
-      (declaration (property_name) (plain_value) (important)))))
+      (declaration
+        (property_name)
+        (plain_value)
+        (important)))))
 
 ============================
 Declarations without trailing semicolons
@@ -200,10 +295,15 @@ a {
 
 (stylesheet
   (rule_set
-    (selectors (tag_name))
+    (selectors
+      (tag_name))
     (block
-      (declaration (property_name) (plain_value))
-      (declaration (property_name) (plain_value)))))
+      (declaration
+        (property_name)
+        (plain_value))
+      (declaration
+        (property_name)
+        (plain_value)))))
 
 =======================================
 Comments right after numbers
@@ -220,19 +320,35 @@ a {
 (stylesheet
   (js_comment)
   (rule_set
-    (selectors (tag_name))
+    (selectors
+      (tag_name))
     (block
-      (declaration (property_name) (call_expression (function_name) (arguments
-        (integer_value (unit))
-        (comment)
-        (plain_value)
-        (integer_value (unit))
-        (integer_value (unit)))))
-      (declaration (property_name) (call_expression (function_name) (arguments
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))
-        (integer_value (unit))))))))
+      (declaration
+        (property_name)
+        (call_expression
+          (function_name)
+          (arguments
+            (integer_value
+              (unit))
+            (comment)
+            (plain_value)
+            (integer_value
+              (unit))
+            (integer_value
+              (unit)))))
+      (declaration
+        (property_name)
+        (call_expression
+          (function_name)
+          (arguments
+            (integer_value
+              (unit))
+            (integer_value
+              (unit))
+            (integer_value
+              (unit))
+            (integer_value
+              (unit))))))))
 
 =================================
 Declarations at the top level
@@ -244,8 +360,22 @@ a-property: calc(5px + var(--a-variable));
 ---
 
 (stylesheet
-  (declaration (property_name) (integer_value (unit)))
-  (declaration (property_name) (call_expression (function_name) (arguments (binary_expression (integer_value (unit)) (call_expression (function_name) (arguments (plain_value))))))))
+  (declaration
+    (property_name)
+    (integer_value
+      (unit)))
+  (declaration
+    (property_name)
+    (call_expression
+      (function_name)
+      (arguments
+        (binary_expression
+          (integer_value
+            (unit))
+          (call_expression
+            (function_name)
+            (arguments
+              (plain_value))))))))
 
 =============================================
 Spaces after colons in property declarations
@@ -284,11 +414,18 @@ div {
 
 (stylesheet
   (rule_set
-    (selectors (tag_name))
+    (selectors
+      (tag_name))
     (block
-      (declaration (property_name) (plain_value))
-      (declaration (property_name) (plain_value))
-      (declaration (property_name) (plain_value)))))
+      (declaration
+        (property_name)
+        (plain_value))
+      (declaration
+        (property_name)
+        (plain_value))
+      (declaration
+        (property_name)
+        (plain_value)))))
 
 =============================================
 PostCSS
@@ -313,7 +450,10 @@ PostCSS
 
 (stylesheet
   (rule_set
-    (selectors (class_selector (class_name (identifier))))
+    (selectors
+      (class_selector
+        (class_name
+          (identifier))))
     (block
       (postcss_statement
         (at_keyword)
@@ -326,27 +466,32 @@ PostCSS
     (keyword_query)
     (block
       (rule_set
-        (selectors (class_selector (class_name (identifier))))
+        (selectors
+          (class_selector
+            (class_name
+              (identifier))))
         (block
           (postcss_statement
             (at_keyword)
             (plain_value)
             (plain_value)
             (plain_value)
-            (grid_value (integer_value (unit)))
+            (grid_value
+              (integer_value
+                (unit)))
             (plain_value)
             (important)
             (important_value))))))
   (at_rule
-      (at_keyword)
-      (keyword_query)
-      (block
-        (rule_set
-          (selectors
-            (class_selector
-              (class_name
-                (identifier))))
-          (block)))))
+    (at_keyword)
+    (keyword_query)
+    (block
+      (rule_set
+        (selectors
+          (class_selector
+            (class_name
+              (identifier))))
+        (block)))))
 
 ==============================
 Comments in declarations
@@ -360,7 +505,8 @@ Comments in declarations
 
 (stylesheet
   (rule_set
-    (selectors (nesting_selector))
+    (selectors
+      (nesting_selector))
     (block
       (declaration
         (property_name)

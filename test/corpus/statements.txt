@@ -11,11 +11,27 @@ Import statements
 ---
 
 (stylesheet
-  (import_statement (call_expression (function_name) (arguments (string_value (string_content)))) (keyword_query))
-  (import_statement (call_expression (function_name) (arguments (string_value (string_content)))) (keyword_query))
-  (import_statement (string_value (string_content)))
-  (import_statement (call_expression (function_name) (arguments (string_value (string_content)))))
-  (import_statement (string_value (string_content)) (keyword_query)))
+  (import_statement
+    (url_expression
+      (string_value
+        (string_content)))
+    (keyword_query))
+  (import_statement
+    (url_expression
+      (string_value
+        (string_content)))
+    (keyword_query))
+  (import_statement
+    (string_value
+      (string_content)))
+  (import_statement
+    (url_expression
+      (string_value
+        (string_content))))
+  (import_statement
+    (string_value
+      (string_content))
+    (keyword_query)))
 
 ==============================
 Namespace statements
@@ -35,13 +51,28 @@ Namespace statements
 
 (stylesheet
   (comment)
-  (namespace_statement (call_expression (function_name) (arguments (plain_value))))
-  (namespace_statement (string_value (string_content)))
-  (namespace_statement (call_expression (function_name) (arguments (plain_value))))
-  (namespace_statement (namespace_name) (call_expression (function_name) (arguments (plain_value))))
+  (namespace_statement
+    (url_expression
+      (plain_value)))
+  (namespace_statement
+    (string_value
+      (string_content)))
+  (namespace_statement
+    (url_expression
+      (plain_value)))
+  (namespace_statement
+    (namespace_name)
+    (url_expression
+      (plain_value)))
   (comment)
-  (namespace_statement (namespace_name) (call_expression (function_name) (arguments (plain_value))))
-  (namespace_statement (namespace_name) (string_value (string_content))))
+  (namespace_statement
+    (namespace_name)
+    (url_expression
+      (plain_value)))
+  (namespace_statement
+    (namespace_name)
+    (string_value
+      (string_content))))
 
 ==============================
 Keyframes statements
@@ -60,13 +91,42 @@ Keyframes statements
 ---
 
 (stylesheet
-  (keyframes_statement (keyframes_name) (keyframe_block_list
-    (keyframe_block (from) (block (declaration (property_name) (integer_value (unit)))))
-    (keyframe_block (integer_value (unit)) (block (declaration (property_name) (integer_value (unit)) (important))))
-    (comment)
-    (keyframe_block (to) (block (declaration (property_name) (integer_value (unit)))))))
-  (keyframes_statement (keyframes_name) (keyframe_block_list
-    (keyframe_block (integer_value (unit)) (integer_value (unit)) (block)))))
+  (keyframes_statement
+    (keyframes_name)
+    (keyframe_block_list
+      (keyframe_block
+        (from)
+        (block
+          (declaration
+            (property_name)
+            (integer_value
+              (unit)))))
+      (keyframe_block
+        (integer_value
+          (unit))
+        (block
+          (declaration
+            (property_name)
+            (integer_value
+              (unit))
+            (important))))
+      (comment)
+      (keyframe_block
+        (to)
+        (block
+          (declaration
+            (property_name)
+            (integer_value
+              (unit)))))))
+  (keyframes_statement
+    (keyframes_name)
+    (keyframe_block_list
+      (keyframe_block
+        (integer_value
+          (unit))
+        (integer_value
+          (unit))
+        (block)))))
 
 ==============================
 Media statements
@@ -87,24 +147,52 @@ Media statements
     (binary_query
       (binary_query
         (keyword_query)
-        (feature_query (feature_name) (integer_value (unit))))
-      (feature_query (feature_name) (plain_value)))
+        (feature_query
+          (feature_name)
+          (integer_value
+            (unit))))
+      (feature_query
+        (feature_name)
+        (plain_value)))
     (block))
   (media_statement
-    (feature_query (feature_name) (integer_value (unit)))
-    (binary_query (keyword_query) (feature_query (feature_name) (plain_value)))
+    (feature_query
+      (feature_name)
+      (integer_value
+        (unit)))
+    (binary_query
+      (keyword_query)
+      (feature_query
+        (feature_name)
+        (plain_value)))
     (block))
   (media_statement
-    (binary_query (unary_query (keyword_query)) (parenthesized_query (keyword_query)))
+    (binary_query
+      (unary_query
+        (keyword_query))
+      (parenthesized_query
+        (keyword_query)))
     (block))
-  (media_statement (unary_query (keyword_query)) (block))
+  (media_statement
+    (unary_query
+      (keyword_query))
+    (block))
   (media_statement
     (binary_query
       (keyword_query)
-      (feature_query (feature_name) (integer_value) (integer_value)))
+      (feature_query
+        (feature_name)
+        (integer_value)
+        (integer_value)))
     (block
       (rule_set
-        (selectors (pseudo_class_selector (class_selector (class_name (identifier))) (class_name (identifier))))
+        (selectors
+          (pseudo_class_selector
+            (class_selector
+              (class_name
+                (identifier)))
+            (class_name
+              (identifier))))
         (block)))))
 
 ==============================
@@ -122,24 +210,46 @@ Supports statements
 
 (stylesheet
   (supports_statement
-    (feature_query (feature_name) (plain_value))
+    (feature_query
+      (feature_name)
+      (plain_value))
     (block
-      (rule_set (selectors (tag_name)) (block
-        (declaration (property_name) (plain_value))))))
+      (rule_set
+        (selectors
+          (tag_name))
+        (block
+          (declaration
+            (property_name)
+            (plain_value))))))
   (supports_statement
     (binary_query
-      (feature_query (feature_name) (plain_value))
-      (feature_query (feature_name) (plain_value)))
+      (feature_query
+        (feature_name)
+        (plain_value))
+      (feature_query
+        (feature_name)
+        (plain_value)))
     (block))
   (supports_statement
-    (unary_query (parenthesized_query (binary_query
-      (feature_query (feature_name) (plain_value))
-      (feature_query (feature_name) (plain_value)))))
+    (unary_query
+      (parenthesized_query
+        (binary_query
+          (feature_query
+            (feature_name)
+            (plain_value))
+          (feature_query
+            (feature_name)
+            (plain_value)))))
     (block))
   (supports_statement
-    (unary_query (selector_query (pseudo_class_selector
-      (class_name (identifier))
-      (arguments (tag_name) (tag_name)))))
+    (unary_query
+      (selector_query
+        (pseudo_class_selector
+          (class_name
+            (identifier))
+          (arguments
+            (tag_name)
+            (tag_name)))))
     (block)))
 
 ==============================
@@ -151,7 +261,9 @@ Charset statements
 ---
 
 (stylesheet
-  (charset_statement (string_value (string_content))))
+  (charset_statement
+    (string_value
+      (string_content))))
 
 ==============================
 Scope statements
@@ -173,18 +285,33 @@ Scope statements
 
 (stylesheet
   (scope_statement
-    (class_selector (class_name (identifier)))
+    (class_selector
+      (class_name
+        (identifier)))
     (block
-      (rule_set (selectors (tag_name))
+      (rule_set
+        (selectors
+          (tag_name))
         (block
-          (declaration (property_name) (plain_value))))))
+          (declaration
+            (property_name)
+            (plain_value))))))
   (scope_statement
-    (class_selector (class_name (identifier)))
+    (class_selector
+      (class_name
+        (identifier)))
     (tag_name)
     (block
-      (rule_set (selectors (tag_name))
+      (rule_set
+        (selectors
+          (tag_name))
         (block
-          (declaration (property_name) (integer_value (unit)) (plain_value) (plain_value)))))))
+          (declaration
+            (property_name)
+            (integer_value
+              (unit))
+            (plain_value)
+            (plain_value)))))))
 
 ==============================
 Other at-statements
@@ -201,9 +328,25 @@ Other at-statements
   (at_rule
     (at_keyword)
     (block
-      (declaration (property_name) (string_value (string_content)))
-      (declaration (property_name)
-        (call_expression (function_name) (arguments (string_value (string_content))))
-        (call_expression (function_name) (arguments (string_value (string_content))))
-        (call_expression (function_name) (arguments (string_value (string_content))))
-        (call_expression (function_name) (arguments (string_value (string_content))))))))
+      (declaration
+        (property_name)
+        (string_value
+          (string_content)))
+      (declaration
+        (property_name)
+        (url_expression
+          (string_value
+            (string_content)))
+        (call_expression
+          (function_name)
+          (arguments
+            (string_value
+              (string_content))))
+        (url_expression
+          (string_value
+            (string_content)))
+        (call_expression
+          (function_name)
+          (arguments
+            (string_value
+              (string_content))))))))
