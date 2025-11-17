@@ -305,7 +305,9 @@ export default grammar({
         $._value,
       )),
       optional($.important),
-      ';',
+      prec.left(2,
+        seq(';', repeat(';'))
+      ),
     ),
 
     last_declaration: $ => prec(1, seq(
@@ -317,6 +319,7 @@ export default grammar({
         $._value,
       )),
       optional($.important),
+      repeat(';'),
     )),
 
     important: _ => '!important',
