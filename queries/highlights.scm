@@ -32,6 +32,7 @@
 (class_name) @property
 (id_name) @property
 (namespace_name) @property
+(container_name) @property
 (property_name) @property
 (feature_name) @property
 
@@ -40,6 +41,8 @@
 (attribute_name) @attribute
 
 (function_name) @function
+(style_query "style" @function)
+(selector_query "selector" @function)
 
 "@media" @keyword
 "@import" @keyword
@@ -47,6 +50,7 @@
 "@namespace" @keyword
 "@supports" @keyword
 "@keyframes" @keyword
+"@container" @keyword
 (at_keyword) @keyword
 (to) @keyword
 (from) @keyword

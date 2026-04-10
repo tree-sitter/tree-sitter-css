@@ -41,6 +41,7 @@ export default grammar({
       $.keyframes_statement,
       $.supports_statement,
       $.scope_statement,
+      $.container_statement,
       $.at_rule,
     ),
 
@@ -112,6 +113,13 @@ export default grammar({
       $.block,
     ),
 
+    container_statement: $ => seq(
+      '@container',
+      optional(alias($.identifier, $.container_name)),
+      $._query,
+      $.block,
+    ),
+
     postcss_statement: $ => prec(-1, seq(
       $.at_keyword,
       repeat(choice($._value, $.important_value)),
@@ -150,6 +158,7 @@ export default grammar({
       $.keyframes_statement,
       $.supports_statement,
       $.scope_statement,
+      $.container_statement,
       $.postcss_statement,
       $.at_rule,
     ),
@@ -329,6 +338,7 @@ export default grammar({
       $.binary_query,
       $.unary_query,
       $.selector_query,
+      $.style_query,
       $.parenthesized_query,
     ),
 
@@ -361,6 +371,16 @@ export default grammar({
       'selector',
       '(',
       $._selector,
+      ')',
+    ),
+
+    style_query: $ => seq(
+      'style',
+      '(',
+      choice(
+        seq(alias($.identifier, $.feature_name), ':', repeat1($._value)),
+        $._query,
+      ),
       ')',
     ),
 

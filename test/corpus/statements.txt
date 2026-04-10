@@ -187,6 +187,76 @@ Scope statements
           (declaration (property_name) (integer_value (unit)) (plain_value) (plain_value)))))))
 
 ==============================
+Container statements
+==============================
+
+@container (min-width: 400px) {
+  .inner { display: flex; }
+}
+@container card (min-width: 700px) {
+  .inner { display: grid; }
+}
+@container style(--theme: dark) {
+  .inner { color: white; }
+}
+@container sidebar style(--my-property: dark) {
+  .inner { background: black; }
+}
+@container (min-width: 400px) and style(--responsive: true) {
+  .inner { flex-wrap: wrap; }
+}
+@container not style(--theme: dark) {
+  .inner { color: black; }
+}
+@container style(--theme) {
+  .inner { color: red; }
+}
+
+---
+
+(stylesheet
+  (container_statement
+    (feature_query (feature_name) (integer_value (unit)))
+    (block
+      (rule_set (selectors (class_selector (class_name (identifier))))
+        (block (declaration (property_name) (plain_value))))))
+  (container_statement
+    (container_name)
+    (feature_query (feature_name) (integer_value (unit)))
+    (block
+      (rule_set (selectors (class_selector (class_name (identifier))))
+        (block (declaration (property_name) (plain_value))))))
+  (container_statement
+    (style_query (feature_name) (plain_value))
+    (block
+      (rule_set (selectors (class_selector (class_name (identifier))))
+        (block (declaration (property_name) (plain_value))))))
+  (container_statement
+    (container_name)
+    (style_query (feature_name) (plain_value))
+    (block
+      (rule_set (selectors (class_selector (class_name (identifier))))
+        (block (declaration (property_name) (plain_value))))))
+  (container_statement
+    (binary_query
+      (feature_query (feature_name) (integer_value (unit)))
+      (style_query (feature_name) (plain_value)))
+    (block
+      (rule_set (selectors (class_selector (class_name (identifier))))
+        (block (declaration (property_name) (plain_value))))))
+  (container_statement
+    (unary_query
+      (style_query (feature_name) (plain_value)))
+    (block
+      (rule_set (selectors (class_selector (class_name (identifier))))
+        (block (declaration (property_name) (plain_value))))))
+  (container_statement
+    (style_query (keyword_query))
+    (block
+      (rule_set (selectors (class_selector (class_name (identifier))))
+        (block (declaration (property_name) (plain_value)))))))
+
+==============================
 Other at-statements
 ==============================
 
