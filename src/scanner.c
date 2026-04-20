@@ -89,10 +89,9 @@ bool tree_sitter_css_external_scanner_scan(void *payload, TSLexer *lexer, const 
                 }
             }
 
-            // If we're at eof, and we happened to *not* find an opening brace to indicate we have a pseudo class
-            // selector, we should *still* return one at EOF. This will improve error recovery, and the malformed code
-            // can be parsed as an erroneous pseudo-class selector, rather than an erroneous property.
-            return lexer->eof(lexer);
+            // If we hit eof or ';' or '}' without finding '{', this colon is not
+            // a pseudo-class selector colon — it's a declaration colon.
+            return false;
         }
     }
 
