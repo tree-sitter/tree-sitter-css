@@ -1,0 +1,444 @@
+macro sep1(separator: rule_t, item: rule_t) rule_t {
+    seq(item, repeat(seq(separator, item)))
+}
+macro sep(separator: rule_t, item: rule_t) rule_t {
+    optional(sep1(separator, item))
+}
+
+grammar {
+    language: "css",
+    extras: [regexp(r"\s"), comment, js_comment],
+    externals: [_descendant_operator, _pseudo_class_selector_colon, __error_recovery],
+    inline: [_top_level_item, _block_item],
+}
+
+rule stylesheet { repeat(_top_level_item) }
+
+rule _top_level_item {
+    choice(
+        declaration,
+        rule_set,
+        import_statement,
+        media_statement,
+        charset_statement,
+        namespace_statement,
+        keyframes_statement,
+        supports_statement,
+        scope_statement,
+        at_rule,
+    )
+}
+
+// Statements
+
+rule import_statement {
+    seq("@import", _value, sep(",", _query), ";")
+}
+
+rule media_statement {
+    seq("@media", sep1(",", _query), block)
+}
+
+rule charset_statement {
+    seq("@charset", _value, ";")
+}
+
+rule namespace_statement {
+    seq(
+        "@namespace",
+        optional(alias(identifier, namespace_name)),
+        choice(string_value, call_expression),
+        ";",
+    )
+}
+
+rule keyframes_statement {
+    seq(
+        choice("@keyframes", alias(regexp(r"@[-a-z]+keyframes"), at_keyword)),
+        alias(identifier, keyframes_name),
+        keyframe_block_list,
+    )
+}
+
+rule keyframe_block_list {
+    seq("{", repeat(keyframe_block), "}")
+}
+
+rule keyframe_block {
+    seq(sep1(",", choice(from, to, integer_value)), block)
+}
+
+rule from { "from" }
+rule to { "to" }
+
+rule supports_statement {
+    seq("@supports", _query, block)
+}
+
+rule scope_statement {
+    seq(
+        "@scope",
+        optional(seq(
+            "(", _selector, ")",
+            optional(seq("to", "(", _selector, ")")),
+        )),
+        block,
+    )
+}
+
+rule postcss_statement {
+    prec(-1, seq(
+        at_keyword,
+        repeat(choice(_value, important_value)),
+        ";",
+    ))
+}
+
+rule at_rule {
+    seq(at_keyword, sep(",", _query), choice(";", block))
+}
+
+// Rule sets
+
+rule rule_set { seq(selectors, block) }
+
+rule selectors { sep1(",", _selector) }
+
+rule block {
+    seq("{", repeat(_block_item), optional(alias(last_declaration, declaration)), "}")
+}
+
+rule _block_item {
+    choice(
+        declaration,
+        rule_set,
+        import_statement,
+        media_statement,
+        charset_statement,
+        namespace_statement,
+        keyframes_statement,
+        supports_statement,
+        scope_statement,
+        postcss_statement,
+        at_rule,
+    )
+}
+
+// Selectors
+
+rule _selector {
+    choice(
+        universal_selector,
+        alias(identifier, tag_name),
+        class_selector,
+        nesting_selector,
+        pseudo_class_selector,
+        pseudo_element_selector,
+        id_selector,
+        attribute_selector,
+        string_value,
+        child_selector,
+        descendant_selector,
+        sibling_selector,
+        adjacent_sibling_selector,
+        namespace_selector,
+    )
+}
+
+rule nesting_selector { "&" }
+
+rule universal_selector { "*" }
+
+rule class_selector {
+    prec(1, seq(optional(_selector), ".", class_name))
+}
+
+rule pseudo_class_selector {
+    seq(
+        optional(_selector),
+        alias(_pseudo_class_selector_colon, ":"),
+        choice(
+            seq(
+                alias(choice("has", "not", "is", "where", "host", "host-context"), class_name),
+                alias(pseudo_class_with_selector_arguments, arguments),
+            ),
+            _nth_child_pseudo_class_selector,
+            seq(class_name, optional(alias(pseudo_class_arguments, arguments))),
+            alias("host", class_name),
+        ),
+    )
+}
+
+rule _nth_child_pseudo_class_selector {
+    seq(
+        alias(choice("nth-child", "nth-last-child"), class_name),
+        alias(pseudo_class_nth_child_arguments, arguments),
+    )
+}
+
+rule pseudo_element_selector {
+    seq(
+        optional(_selector),
+        "::",
+        alias(identifier, tag_name),
+        optional(alias(pseudo_element_arguments, arguments)),
+    )
+}
+
+rule id_selector {
+    seq(optional(_selector), "#", alias(identifier, id_name))
+}
+
+rule attribute_selector {
+    seq(
+        optional(_selector),
+        token(prec(1, "[")),
+        alias(choice(identifier, namespace_selector), attribute_name),
+        optional(seq(
+            choice("=", "~=", "^=", "|=", "*=", "$="),
+            _value,
+        )),
+        "]",
+    )
+}
+
+rule child_selector {
+    prec_left(0, seq(optional(_selector), ">", _selector))
+}
+
+rule descendant_selector {
+    prec_left(0, seq(_selector, _descendant_operator, _selector))
+}
+
+rule sibling_selector {
+    prec_left(0, seq(optional(_selector), "~", _selector))
+}
+
+rule adjacent_sibling_selector {
+    prec_left(0, seq(optional(_selector), "+", _selector))
+}
+
+rule namespace_selector {
+    prec_left(0, seq(optional(_selector), "|", _selector))
+}
+
+rule pseudo_class_arguments {
+    seq(
+        token_immediate("("),
+        sep(",", choice(_selector, repeat1(_value))),
+        ")",
+    )
+}
+
+rule pseudo_class_with_selector_arguments {
+    seq(token_immediate("("), sep(",", _selector), ")")
+}
+
+rule pseudo_class_nth_child_arguments {
+    prec(-1, seq(
+        token_immediate("("),
+        choice(
+            alias("even", plain_value),
+            alias("odd", plain_value),
+            integer_value,
+            alias(_nth_functional_notation, plain_value),
+        ),
+        optional(seq("of", _selector)),
+        ")",
+    ))
+}
+
+rule _nth_functional_notation { regexp(r"-?(\d)*n\s*(\+\s*\d+)?") }
+
+rule pseudo_element_arguments {
+    seq(
+        token_immediate("("),
+        sep(",", choice(_selector, repeat1(_value))),
+        ")",
+    )
+}
+
+// Declarations
+
+rule declaration {
+    seq(
+        alias(identifier, property_name),
+        ":",
+        _value,
+        repeat(seq(optional(","), _value)),
+        optional(important),
+        ";",
+    )
+}
+
+rule last_declaration {
+    prec(1, seq(
+        alias(identifier, property_name),
+        ":",
+        _value,
+        repeat(seq(optional(","), _value)),
+        optional(important),
+    ))
+}
+
+rule important { "!important" }
+
+// Media queries
+
+rule _query {
+    choice(
+        alias(identifier, keyword_query),
+        feature_query,
+        binary_query,
+        unary_query,
+        selector_query,
+        parenthesized_query,
+    )
+}
+
+rule feature_query {
+    seq("(", alias(identifier, feature_name), ":", repeat1(_value), ")")
+}
+
+rule parenthesized_query { seq("(", _query, ")") }
+
+rule binary_query {
+    prec_left(0, seq(_query, choice("and", "or"), _query))
+}
+
+rule unary_query {
+    prec(1, seq(choice("not", "only"), _query))
+}
+
+rule selector_query { seq("selector", "(", _selector, ")") }
+
+// Property Values
+
+rule _value {
+    prec(-1, choice(
+        alias(identifier, plain_value),
+        plain_value,
+        color_value,
+        integer_value,
+        float_value,
+        string_value,
+        grid_value,
+        binary_expression,
+        parenthesized_value,
+        call_expression,
+        important,
+    ))
+}
+
+rule parenthesized_value { seq("(", _value, ")") }
+
+rule color_value { seq("#", token_immediate(regexp(r"[0-9a-fA-F]{3,8}"))) }
+
+rule string_value {
+    choice(
+        seq(
+            "'",
+            repeat(choice(alias(regexp(r"[^\\'\n]+"), string_content), escape_sequence)),
+            "'",
+        ),
+        seq(
+            "\"",
+            repeat(choice(alias(regexp(r#"[^\\"\n]+"#), string_content), escape_sequence)),
+            "\"",
+        ),
+    )
+}
+
+rule escape_sequence {
+    token(seq(
+        "\\",
+        choice(
+            regexp(r"[0-9a-fA-F]{1,6}\s?"),
+            regexp(r"[^0-9a-fA-F\n\r]"),
+        ),
+    ))
+}
+
+rule integer_value {
+    seq(
+        token(seq(optional(choice("+", "-")), regexp(r"\d+"))),
+        optional(unit),
+    )
+}
+
+rule float_value {
+    seq(
+        token(seq(
+            optional(choice("+", "-")),
+            regexp(r"\d*"),
+            choice(
+                seq(".", regexp(r"\d+")),
+                seq(regexp(r"[eE]"), optional("-"), regexp(r"\d+")),
+                seq(".", regexp(r"\d+"), regexp(r"[eE]"), optional("-"), regexp(r"\d+")),
+            ),
+        )),
+        optional(unit),
+    )
+}
+
+rule unit { token_immediate(regexp(r"[a-zA-Z%]+")) }
+
+rule grid_value { seq("[", sep1(",", _value), "]") }
+
+rule call_expression {
+    seq(alias(identifier, function_name), arguments)
+}
+
+rule binary_expression {
+    prec_left(0, seq(_value, choice("+", "-", "*", "/"), _value))
+}
+
+rule arguments {
+    seq(
+        token_immediate("("),
+        sep(choice(",", ";"), repeat1(_value)),
+        ")",
+    )
+}
+
+rule class_name {
+    seq(
+        choice(identifier, escape_sequence),
+        repeat(choice(
+            alias(regexp(r"[a-zA-Z0-9-_\u00A0-\u00FF]+"), identifier),
+            escape_sequence,
+        )),
+    )
+}
+
+rule identifier { regexp(r"(--|-?[a-zA-Z_\u00A0-\u00FF])[a-zA-Z0-9-_\u00A0-\u00FF]*") }
+
+rule at_keyword { regexp(r"@[a-zA-Z-_]+") }
+
+rule js_comment { token(prec(-1, seq("//", regexp(r".*")))) }
+
+rule comment {
+    token(seq(
+        "/*",
+        regexp(r"[^*]*\*+([^/*][^*]*\*+)*"),
+        "/",
+    ))
+}
+
+rule plain_value {
+    token(seq(
+        repeat(choice(
+            regexp(r"[-_]"),
+            regexp(r"\/[^\*\s,;!{}()\[\]]"),
+        )),
+        regexp(r"[a-zA-Z]"),
+        repeat(choice(
+            regexp(r"[^/\s,;!{}()\[\]]"),
+            regexp(r"\/[^\*\s,;!{}()\[\]]"),
+        )),
+    ))
+}
+
+rule important_value {
+    token(seq("!", regexp(r"[a-zA-Z]"), repeat(regexp(r"[a-zA-Z0-9-_]"))))
+}
