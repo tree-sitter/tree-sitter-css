@@ -313,7 +313,10 @@ PostCSS
 
 (stylesheet
   (rule_set
-    (selectors (class_selector (class_name (identifier))))
+    (selectors
+      (class_selector
+        (class_name
+          (identifier))))
     (block
       (postcss_statement
         (at_keyword)
@@ -321,32 +324,35 @@ PostCSS
         (plain_value)
         (plain_value)
         (important))))
-  (at_rule
-    (at_keyword)
-    (keyword_query)
+  (layer_statement
+    (layer_name)
     (block
       (rule_set
-        (selectors (class_selector (class_name (identifier))))
+        (selectors
+          (class_selector
+            (class_name
+              (identifier))))
         (block
           (postcss_statement
             (at_keyword)
             (plain_value)
             (plain_value)
             (plain_value)
-            (grid_value (integer_value (unit)))
+            (grid_value
+              (integer_value
+                (unit)))
             (plain_value)
             (important)
             (important_value))))))
-  (at_rule
-      (at_keyword)
-      (keyword_query)
-      (block
-        (rule_set
-          (selectors
-            (class_selector
-              (class_name
-                (identifier))))
-          (block)))))
+  (layer_statement
+    (layer_name)
+    (block
+      (rule_set
+        (selectors
+          (class_selector
+            (class_name
+              (identifier))))
+        (block)))))
 
 ==============================
 Comments in declarations

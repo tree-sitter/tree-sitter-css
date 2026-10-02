@@ -10,6 +10,12 @@ Rule sets
 
 (stylesheet
   (rule_set
-    (selectors (id_selector (id_name)))
+    (selectors
+      (id_selector
+        (id_name
+          (identifier))))
     (block
-      (declaration (property_name) (integer_value (unit))))))
+      (declaration
+        (property_name)
+        (integer_value
+          (unit))))))

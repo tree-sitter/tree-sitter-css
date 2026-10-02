@@ -119,6 +119,10 @@
           "named": true
         },
         {
+          "type": "if_branch",
+          "named": true
+        },
+        {
           "type": "important",
           "named": true
         },
@@ -165,6 +169,10 @@
         {
           "type": "universal_selector",
           "named": true
+        },
+        {
+          "type": "url_call",
+          "named": true
         }
       ]
     }
@@ -202,7 +210,15 @@
           "named": true
         },
         {
+          "type": "range_query",
+          "named": true
+        },
+        {
           "type": "selector_query",
+          "named": true
+        },
+        {
+          "type": "style_query",
           "named": true
         },
         {
@@ -289,6 +305,10 @@
       "types": [
         {
           "type": "adjacent_sibling_selector",
+          "named": true
+        },
+        {
+          "type": "attribute_flag",
           "named": true
         },
         {
@@ -382,6 +402,10 @@
         {
           "type": "universal_selector",
           "named": true
+        },
+        {
+          "type": "url_call",
+          "named": true
         }
       ]
     }
@@ -433,6 +457,10 @@
         {
           "type": "string_value",
           "named": true
+        },
+        {
+          "type": "url_call",
+          "named": true
         }
       ]
     }
@@ -462,7 +490,15 @@
           "named": true
         },
         {
+          "type": "range_query",
+          "named": true
+        },
+        {
           "type": "selector_query",
+          "named": true
+        },
+        {
+          "type": "style_query",
           "named": true
         },
         {
@@ -489,7 +525,15 @@
           "named": true
         },
         {
+          "type": "container_statement",
+          "named": true
+        },
+        {
           "type": "declaration",
+          "named": true
+        },
+        {
+          "type": "function_statement",
           "named": true
         },
         {
@@ -501,11 +545,19 @@
           "named": true
         },
         {
+          "type": "layer_statement",
+          "named": true
+        },
+        {
           "type": "media_statement",
           "named": true
         },
         {
           "type": "namespace_statement",
+          "named": true
+        },
+        {
+          "type": "page_statement",
           "named": true
         },
         {
@@ -592,6 +644,10 @@
         },
         {
           "type": "string_value",
+          "named": true
+        },
+        {
+          "type": "url_call",
           "named": true
         }
       ]
@@ -760,6 +816,57 @@
     "fields": {}
   },
   {
+    "type": "container_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "binary_query",
+          "named": true
+        },
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "container_name",
+          "named": true
+        },
+        {
+          "type": "feature_query",
+          "named": true
+        },
+        {
+          "type": "keyword_query",
+          "named": true
+        },
+        {
+          "type": "parenthesized_query",
+          "named": true
+        },
+        {
+          "type": "range_query",
+          "named": true
+        },
+        {
+          "type": "selector_query",
+          "named": true
+        },
+        {
+          "type": "style_query",
+          "named": true
+        },
+        {
+          "type": "unary_query",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "declaration",
     "named": true,
     "fields": {},
@@ -809,6 +916,10 @@
         },
         {
           "type": "string_value",
+          "named": true
+        },
+        {
+          "type": "url_call",
           "named": true
         }
       ]
@@ -932,6 +1043,10 @@
         {
           "type": "string_value",
           "named": true
+        },
+        {
+          "type": "url_call",
+          "named": true
         }
       ]
     }
@@ -946,6 +1061,33 @@
       "types": [
         {
           "type": "unit",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "function_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "function_name",
+          "named": true
+        },
+        {
+          "type": "parameter",
+          "named": true
+        },
+        {
+          "type": "plain_value",
           "named": true
         }
       ]
@@ -997,6 +1139,29 @@
         },
         {
           "type": "string_value",
+          "named": true
+        },
+        {
+          "type": "url_call",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "id_name",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "escape_sequence",
+          "named": true
+        },
+        {
+          "type": "identifier",
           "named": true
         }
       ]
@@ -1074,6 +1239,65 @@
     }
   },
   {
+    "type": "if_branch",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "color_value",
+          "named": true
+        },
+        {
+          "type": "float_value",
+          "named": true
+        },
+        {
+          "type": "grid_value",
+          "named": true
+        },
+        {
+          "type": "important",
+          "named": true
+        },
+        {
+          "type": "integer_value",
+          "named": true
+        },
+        {
+          "type": "parenthesized_value",
+          "named": true
+        },
+        {
+          "type": "plain_value",
+          "named": true
+        },
+        {
+          "type": "string_value",
+          "named": true
+        },
+        {
+          "type": "style_query",
+          "named": true
+        },
+        {
+          "type": "url_call",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "import_statement",
     "named": true,
     "fields": {},
@@ -1106,6 +1330,10 @@
           "named": true
         },
         {
+          "type": "function_name",
+          "named": true
+        },
+        {
           "type": "grid_value",
           "named": true
         },
@@ -1122,6 +1350,10 @@
           "named": true
         },
         {
+          "type": "layer_name",
+          "named": true
+        },
+        {
           "type": "parenthesized_query",
           "named": true
         },
@@ -1134,6 +1366,10 @@
           "named": true
         },
         {
+          "type": "range_query",
+          "named": true
+        },
+        {
           "type": "selector_query",
           "named": true
         },
@@ -1142,7 +1378,15 @@
           "named": true
         },
         {
+          "type": "style_query",
+          "named": true
+        },
+        {
           "type": "unary_query",
+          "named": true
+        },
+        {
+          "type": "url_call",
           "named": true
         }
       ]
@@ -1173,6 +1417,10 @@
       "types": [
         {
           "type": "block",
+          "named": true
+        },
+        {
+          "type": "float_value",
           "named": true
         },
         {
@@ -1229,6 +1477,25 @@
     }
   },
   {
+    "type": "layer_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "layer_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "media_statement",
     "named": true,
     "fields": {},
@@ -1257,7 +1524,15 @@
           "named": true
         },
         {
+          "type": "range_query",
+          "named": true
+        },
+        {
           "type": "selector_query",
+          "named": true
+        },
+        {
+          "type": "style_query",
           "named": true
         },
         {
@@ -1358,6 +1633,80 @@
     }
   },
   {
+    "type": "page_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "page_selector",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "parameter",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "color_value",
+          "named": true
+        },
+        {
+          "type": "float_value",
+          "named": true
+        },
+        {
+          "type": "grid_value",
+          "named": true
+        },
+        {
+          "type": "important",
+          "named": true
+        },
+        {
+          "type": "integer_value",
+          "named": true
+        },
+        {
+          "type": "parenthesized_value",
+          "named": true
+        },
+        {
+          "type": "plain_value",
+          "named": true
+        },
+        {
+          "type": "string_value",
+          "named": true
+        },
+        {
+          "type": "url_call",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "parenthesized_query",
     "named": true,
     "fields": {},
@@ -1382,7 +1731,15 @@
           "named": true
         },
         {
+          "type": "range_query",
+          "named": true
+        },
+        {
           "type": "selector_query",
+          "named": true
+        },
+        {
+          "type": "style_query",
           "named": true
         },
         {
@@ -1438,6 +1795,10 @@
         },
         {
           "type": "string_value",
+          "named": true
+        },
+        {
+          "type": "url_call",
           "named": true
         }
       ]
@@ -1497,6 +1858,10 @@
         },
         {
           "type": "string_value",
+          "named": true
+        },
+        {
+          "type": "url_call",
           "named": true
         }
       ]
@@ -1643,6 +2008,33 @@
         },
         {
           "type": "universal_selector",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "range_query",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "feature_name",
+          "named": true
+        },
+        {
+          "type": "float_value",
+          "named": true
+        },
+        {
+          "type": "integer_value",
           "named": true
         }
       ]
@@ -1959,6 +2351,101 @@
     }
   },
   {
+    "type": "style_query",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "binary_query",
+          "named": true
+        },
+        {
+          "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "color_value",
+          "named": true
+        },
+        {
+          "type": "feature_name",
+          "named": true
+        },
+        {
+          "type": "feature_query",
+          "named": true
+        },
+        {
+          "type": "float_value",
+          "named": true
+        },
+        {
+          "type": "function_name",
+          "named": true
+        },
+        {
+          "type": "grid_value",
+          "named": true
+        },
+        {
+          "type": "important",
+          "named": true
+        },
+        {
+          "type": "integer_value",
+          "named": true
+        },
+        {
+          "type": "keyword_query",
+          "named": true
+        },
+        {
+          "type": "parenthesized_query",
+          "named": true
+        },
+        {
+          "type": "parenthesized_value",
+          "named": true
+        },
+        {
+          "type": "plain_value",
+          "named": true
+        },
+        {
+          "type": "range_query",
+          "named": true
+        },
+        {
+          "type": "selector_query",
+          "named": true
+        },
+        {
+          "type": "string_value",
+          "named": true
+        },
+        {
+          "type": "style_query",
+          "named": true
+        },
+        {
+          "type": "unary_query",
+          "named": true
+        },
+        {
+          "type": "url_call",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "stylesheet",
     "named": true,
     "root": true,
@@ -1976,7 +2463,15 @@
           "named": true
         },
         {
+          "type": "container_statement",
+          "named": true
+        },
+        {
           "type": "declaration",
+          "named": true
+        },
+        {
+          "type": "function_statement",
           "named": true
         },
         {
@@ -1988,11 +2483,19 @@
           "named": true
         },
         {
+          "type": "layer_statement",
+          "named": true
+        },
+        {
           "type": "media_statement",
           "named": true
         },
         {
           "type": "namespace_statement",
+          "named": true
+        },
+        {
+          "type": "page_statement",
           "named": true
         },
         {
@@ -2039,7 +2542,15 @@
           "named": true
         },
         {
+          "type": "range_query",
+          "named": true
+        },
+        {
           "type": "selector_query",
+          "named": true
+        },
+        {
+          "type": "style_query",
           "named": true
         },
         {
@@ -2079,7 +2590,15 @@
           "named": true
         },
         {
+          "type": "range_query",
+          "named": true
+        },
+        {
           "type": "selector_query",
+          "named": true
+        },
+        {
+          "type": "style_query",
           "named": true
         },
         {
@@ -2093,6 +2612,25 @@
     "type": "universal_selector",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "url_call",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "arguments",
+          "named": true
+        },
+        {
+          "type": "function_name",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "\"",
@@ -2159,6 +2697,14 @@
     "named": false
   },
   {
+    "type": "<",
+    "named": false
+  },
+  {
+    "type": "<=",
+    "named": false
+  },
+  {
     "type": "=",
     "named": false
   },
@@ -2167,7 +2713,19 @@
     "named": false
   },
   {
+    "type": ">=",
+    "named": false
+  },
+  {
     "type": "@charset",
+    "named": false
+  },
+  {
+    "type": "@container",
+    "named": false
+  },
+  {
+    "type": "@function",
     "named": false
   },
   {
@@ -2179,11 +2737,19 @@
     "named": false
   },
   {
+    "type": "@layer",
+    "named": false
+  },
+  {
     "type": "@media",
     "named": false
   },
   {
     "type": "@namespace",
+    "named": false
+  },
+  {
+    "type": "@page",
     "named": false
   },
   {
@@ -2215,9 +2781,17 @@
     "named": true
   },
   {
+    "type": "attribute_flag",
+    "named": true
+  },
+  {
     "type": "comment",
     "named": true,
     "extra": true
+  },
+  {
+    "type": "container_name",
+    "named": true
   },
   {
     "type": "escape_sequence",
@@ -2233,10 +2807,6 @@
   },
   {
     "type": "function_name",
-    "named": true
-  },
-  {
-    "type": "id_name",
     "named": true
   },
   {
@@ -2265,6 +2835,10 @@
     "named": true
   },
   {
+    "type": "layer_name",
+    "named": true
+  },
+  {
     "type": "namespace_name",
     "named": true
   },
@@ -2289,12 +2863,20 @@
     "named": false
   },
   {
+    "type": "page_selector",
+    "named": true
+  },
+  {
     "type": "plain_value",
     "named": true
   },
   {
     "type": "property_name",
     "named": true
+  },
+  {
+    "type": "returns",
+    "named": false
   },
   {
     "type": "selector",
