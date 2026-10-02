@@ -1,0 +1,714 @@
+=============================================
+Import layer
+=============================================
+
+@import url("reset.css") layer(base);
+
+---
+
+(stylesheet
+  (import_statement
+    (url_call
+      (function_name)
+      (arguments
+        (string_value
+          (string_content))))
+    (function_name)
+    (layer_name)))
+
+=============================================
+Import layer supports
+=============================================
+
+@import url(unquoted.css) layer(theme) supports(display: grid) screen;
+
+---
+
+(stylesheet
+  (import_statement
+    (url_call
+      (function_name)
+      (arguments
+        (plain_value)))
+    (function_name)
+    (layer_name)
+    (style_query
+      (function_name)
+      (feature_name)
+      (plain_value))
+    (keyword_query)))
+
+=============================================
+Page first
+=============================================
+
+@page :first { margin: 1in; }
+
+---
+
+(stylesheet
+  (page_statement
+    (page_selector)
+    (block
+      (declaration
+        (property_name)
+        (integer_value
+          (unit))))))
+
+=============================================
+Attr flag i
+=============================================
+
+a[href$=".pdf" i] { x: y; }
+
+---
+
+(stylesheet
+  (rule_set
+    (selectors
+      (attribute_selector
+        (tag_name)
+        (attribute_name)
+        (string_value
+          (string_content))
+        (attribute_flag)))
+    (block
+      (declaration
+        (property_name)
+        (plain_value)))))
+
+=============================================
+Attr flag s
+=============================================
+
+a[href^='http' s] { x: y; }
+
+---
+
+(stylesheet
+  (rule_set
+    (selectors
+      (attribute_selector
+        (tag_name)
+        (attribute_name)
+        (string_value
+          (string_content))
+        (attribute_flag)))
+    (block
+      (declaration
+        (property_name)
+        (plain_value)))))
+
+=============================================
+Nest amp after
+=============================================
+
+.a { .dense & { padding: 0; } }
+
+---
+
+(stylesheet
+  (rule_set
+    (selectors
+      (class_selector
+        (class_name
+          (identifier))))
+    (block
+      (rule_set
+        (selectors
+          (descendant_selector
+            (class_selector
+              (class_name
+                (identifier)))
+            (nesting_selector)))
+        (block
+          (declaration
+            (property_name)
+            (integer_value)))))))
+
+=============================================
+Nest media range
+=============================================
+
+.a { @media (width < 600px) { display: block; } }
+
+---
+
+(stylesheet
+  (rule_set
+    (selectors
+      (class_selector
+        (class_name
+          (identifier))))
+    (block
+      (media_statement
+        (range_query
+          (feature_name)
+          (integer_value
+            (unit)))
+        (block
+          (declaration
+            (property_name)
+            (plain_value)))))))
+
+=============================================
+Media range both
+=============================================
+
+@media (400px <= width <= 700px) { .n { display: block; } }
+
+---
+
+(stylesheet
+  (media_statement
+    (range_query
+      (integer_value
+        (unit))
+      (feature_name)
+      (integer_value
+        (unit)))
+    (block
+      (rule_set
+        (selectors
+          (class_selector
+            (class_name
+              (identifier))))
+        (block
+          (declaration
+            (property_name)
+            (plain_value)))))))
+
+=============================================
+Media range ge
+=============================================
+
+@media (width >= 600px) and (width <= 900px), (height > 200px) { .r { display: none; } }
+
+---
+
+(stylesheet
+  (media_statement
+    (binary_query
+      (range_query
+        (feature_name)
+        (integer_value
+          (unit)))
+      (range_query
+        (feature_name)
+        (integer_value
+          (unit))))
+    (range_query
+      (feature_name)
+      (integer_value
+        (unit)))
+    (block
+      (rule_set
+        (selectors
+          (class_selector
+            (class_name
+              (identifier))))
+        (block
+          (declaration
+            (property_name)
+            (plain_value)))))))
+
+=============================================
+Container named
+=============================================
+
+@container sidebar (min-width: 400px) { .c { display: flex; } }
+
+---
+
+(stylesheet
+  (container_statement
+    (container_name)
+    (feature_query
+      (feature_name)
+      (integer_value
+        (unit)))
+    (block
+      (rule_set
+        (selectors
+          (class_selector
+            (class_name
+              (identifier))))
+        (block
+          (declaration
+            (property_name)
+            (plain_value)))))))
+
+=============================================
+Container range
+=============================================
+
+@container (inline-size > 30em) { .c { gap: 1rem; } }
+
+---
+
+(stylesheet
+  (container_statement
+    (range_query
+      (feature_name)
+      (integer_value
+        (unit)))
+    (block
+      (rule_set
+        (selectors
+          (class_selector
+            (class_name
+              (identifier))))
+        (block
+          (declaration
+            (property_name)
+            (integer_value
+              (unit))))))))
+
+=============================================
+Container style
+=============================================
+
+@container style(--theme: dark) { .c { color: white; } }
+
+---
+
+(stylesheet
+  (container_statement
+    (style_query
+      (function_name)
+      (feature_name)
+      (plain_value))
+    (block
+      (rule_set
+        (selectors
+          (class_selector
+            (class_name
+              (identifier))))
+        (block
+          (declaration
+            (property_name)
+            (plain_value)))))))
+
+=============================================
+Container scroll state
+=============================================
+
+@container scroll-state(stuck: top) { .s { top: 0; } }
+
+---
+
+(stylesheet
+  (container_statement
+    (style_query
+      (function_name)
+      (feature_name)
+      (plain_value))
+    (block
+      (rule_set
+        (selectors
+          (class_selector
+            (class_name
+              (identifier))))
+        (block
+          (declaration
+            (property_name)
+            (integer_value)))))))
+
+=============================================
+Container named style and
+=============================================
+
+@container card style(--compact: true) and (min-width: 20em) { .i { padding: 0; } }
+
+---
+
+(stylesheet
+  (container_statement
+    (container_name)
+    (binary_query
+      (style_query
+        (function_name)
+        (feature_name)
+        (plain_value))
+      (feature_query
+        (feature_name)
+        (integer_value
+          (unit))))
+    (block
+      (rule_set
+        (selectors
+          (class_selector
+            (class_name
+              (identifier))))
+        (block
+          (declaration
+            (property_name)
+            (integer_value)))))))
+
+=============================================
+Url hash
+=============================================
+
+a { mask: url(#mask) no-repeat; }
+
+---
+
+(stylesheet
+  (rule_set
+    (selectors
+      (tag_name))
+    (block
+      (declaration
+        (property_name)
+        (url_call
+          (function_name)
+          (arguments
+            (plain_value)))
+        (plain_value)))))
+
+=============================================
+Url relative
+=============================================
+
+a { background: url(../img/a.png); }
+
+---
+
+(stylesheet
+  (rule_set
+    (selectors
+      (tag_name))
+    (block
+      (declaration
+        (property_name)
+        (url_call
+          (function_name)
+          (arguments
+            (plain_value)))))))
+
+=============================================
+Esc digit
+=============================================
+
+.\31 0 { margin: 0; }
+
+---
+
+(stylesheet
+  (rule_set
+    (selectors
+      (class_selector
+        (class_name
+          (escape_sequence)
+          (identifier))))
+    (block
+      (declaration
+        (property_name)
+        (integer_value)))))
+
+=============================================
+Esc colon
+=============================================
+
+.sm\:flex { margin: 0; }
+
+---
+
+(stylesheet
+  (rule_set
+    (selectors
+      (class_selector
+        (class_name
+          (identifier)
+          (escape_sequence)
+          (identifier))))
+    (block
+      (declaration
+        (property_name)
+        (integer_value)))))
+
+=============================================
+Esc slash
+=============================================
+
+.w-1\/2 { margin: 0; }
+
+---
+
+(stylesheet
+  (rule_set
+    (selectors
+      (class_selector
+        (class_name
+          (identifier)
+          (escape_sequence)
+          (identifier))))
+    (block
+      (declaration
+        (property_name)
+        (integer_value)))))
+
+=============================================
+Esc id
+=============================================
+
+#\#hash { margin: 0; }
+
+---
+
+(stylesheet
+  (rule_set
+    (selectors
+      (id_selector
+        (id_name
+          (escape_sequence)
+          (identifier))))
+    (block
+      (declaration
+        (property_name)
+        (integer_value)))))
+
+=============================================
+Unicode class
+=============================================
+
+.ünïcode-class, .日本語 { margin: 0; }
+
+---
+
+(stylesheet
+  (rule_set
+    (selectors
+      (class_selector
+        (class_name
+          (identifier)))
+      (class_selector
+        (class_name
+          (identifier))))
+    (block
+      (declaration
+        (property_name)
+        (integer_value)))))
+
+=============================================
+String newline escape
+=============================================
+
+.e::before { content: "a \
+continued"; }
+
+---
+
+(stylesheet
+  (rule_set
+    (selectors
+      (pseudo_element_selector
+        (class_selector
+          (class_name
+            (identifier)))
+        (tag_name)))
+    (block
+      (declaration
+        (property_name)
+        (string_value
+          (string_content)
+          (escape_sequence)
+          (string_content))))))
+
+=============================================
+Layer list
+=============================================
+
+@layer reset, base;
+
+---
+
+(stylesheet
+  (layer_statement
+    (layer_name)
+    (layer_name)))
+
+=============================================
+Layer dotted
+=============================================
+
+@layer a.b { x { y: z; } }
+
+---
+
+(stylesheet
+  (layer_statement
+    (layer_name)
+    (block
+      (rule_set
+        (selectors
+          (tag_name))
+        (block
+          (declaration
+            (property_name)
+            (plain_value)))))))
+
+=============================================
+Function rule
+=============================================
+
+@function --negate(--value <number>) returns <number> { result: calc(-1 * var(--value)); }
+
+---
+
+(stylesheet
+  (function_statement
+    (function_name)
+    (parameter
+      (plain_value)
+      (plain_value))
+    (plain_value)
+    (block
+      (declaration
+        (property_name)
+        (call_expression
+          (function_name)
+          (arguments
+            (binary_expression
+              (integer_value)
+              (call_expression
+                (function_name)
+                (arguments
+                  (plain_value))))))))))
+
+=============================================
+Attr typed
+=============================================
+
+.m { width: attr(data-w type(<length>), 0px); }
+
+---
+
+(stylesheet
+  (rule_set
+    (selectors
+      (class_selector
+        (class_name
+          (identifier))))
+    (block
+      (declaration
+        (property_name)
+        (call_expression
+          (function_name)
+          (arguments
+            (plain_value)
+            (call_expression
+              (function_name)
+              (arguments
+                (plain_value)))
+            (integer_value
+              (unit))))))))
+
+=============================================
+Important space
+=============================================
+
+a { color: red ! important; }
+
+---
+
+(stylesheet
+  (rule_set
+    (selectors
+      (tag_name))
+    (block
+      (declaration
+        (property_name)
+        (plain_value)
+        (important)))))
+
+=============================================
+Keyframes fraction
+=============================================
+
+@keyframes k { 24.99% { opacity: 0; } }
+
+---
+
+(stylesheet
+  (keyframes_statement
+    (keyframes_name)
+    (keyframe_block_list
+      (keyframe_block
+        (float_value
+          (unit))
+        (block
+          (declaration
+            (property_name)
+            (integer_value)))))))
+
+=============================================
+Nest amp hover
+=============================================
+
+.card { &:hover { x: y; } }
+
+---
+
+(stylesheet
+  (rule_set
+    (selectors
+      (class_selector
+        (class_name
+          (identifier))))
+    (block
+      (rule_set
+        (selectors
+          (pseudo_class_selector
+            (nesting_selector)
+            (class_name
+              (identifier))))
+        (block
+          (declaration
+            (property_name)
+            (plain_value)))))))
+
+=============================================
+Nest amp sibling
+=============================================
+
+.card { & + & { x: y; } }
+
+---
+
+(stylesheet
+  (rule_set
+    (selectors
+      (class_selector
+        (class_name
+          (identifier))))
+    (block
+      (rule_set
+        (selectors
+          (adjacent_sibling_selector
+            (nesting_selector)
+            (nesting_selector)))
+        (block
+          (declaration
+            (property_name)
+            (plain_value)))))))
+
+=============================================
+Semicolons double
+=============================================
+
+a { color: red;; margin: 0; }
+
+---
+
+(stylesheet
+  (rule_set
+    (selectors
+      (tag_name))
+    (block
+      (declaration
+        (property_name)
+        (plain_value))
+      (declaration
+        (property_name)
+        (integer_value)))))

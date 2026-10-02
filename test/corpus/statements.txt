@@ -11,11 +11,33 @@ Import statements
 ---
 
 (stylesheet
-  (import_statement (call_expression (function_name) (arguments (string_value (string_content)))) (keyword_query))
-  (import_statement (call_expression (function_name) (arguments (string_value (string_content)))) (keyword_query))
-  (import_statement (string_value (string_content)))
-  (import_statement (call_expression (function_name) (arguments (string_value (string_content)))))
-  (import_statement (string_value (string_content)) (keyword_query)))
+  (import_statement
+    (url_call
+      (function_name)
+      (arguments
+        (string_value
+          (string_content))))
+    (keyword_query))
+  (import_statement
+    (url_call
+      (function_name)
+      (arguments
+        (string_value
+          (string_content))))
+    (keyword_query))
+  (import_statement
+    (string_value
+      (string_content)))
+  (import_statement
+    (url_call
+      (function_name)
+      (arguments
+        (string_value
+          (string_content)))))
+  (import_statement
+    (string_value
+      (string_content))
+    (keyword_query)))
 
 ==============================
 Namespace statements
@@ -201,9 +223,29 @@ Other at-statements
   (at_rule
     (at_keyword)
     (block
-      (declaration (property_name) (string_value (string_content)))
-      (declaration (property_name)
-        (call_expression (function_name) (arguments (string_value (string_content))))
-        (call_expression (function_name) (arguments (string_value (string_content))))
-        (call_expression (function_name) (arguments (string_value (string_content))))
-        (call_expression (function_name) (arguments (string_value (string_content))))))))
+      (declaration
+        (property_name)
+        (string_value
+          (string_content)))
+      (declaration
+        (property_name)
+        (url_call
+          (function_name)
+          (arguments
+            (string_value
+              (string_content))))
+        (call_expression
+          (function_name)
+          (arguments
+            (string_value
+              (string_content))))
+        (url_call
+          (function_name)
+          (arguments
+            (string_value
+              (string_content))))
+        (call_expression
+          (function_name)
+          (arguments
+            (string_value
+              (string_content))))))))

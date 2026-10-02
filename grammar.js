@@ -41,7 +41,12 @@ export default grammar({
       $.keyframes_statement,
       $.supports_statement,
       $.scope_statement,
+      $.container_statement,
+      $.layer_statement,
+      $.page_statement,
+      $.function_statement,
       $.at_rule,
+      ';',
     ),
 
     // Statements
@@ -49,9 +54,62 @@ export default grammar({
     import_statement: $ => seq(
       '@import',
       $._value,
+      optional(choice(
+        alias('layer', $.keyword_query),
+        seq(alias('layer', $.function_name), token.immediate('('), alias($._layer_name, $.layer_name), ')'),
+      )),
+      optional(seq($.style_query, sep1(',', $._query))),
       sep(',', $._query),
       ';',
     ),
+
+    // @container [name] <query> { … }
+    container_statement: $ => seq(
+      '@container',
+      optional(alias($.identifier, $.container_name)),
+      sep1(',', $._query),
+      $.block,
+    ),
+
+    // @layer a, b.c;  @layer a.b { … }  @layer { … }
+    layer_statement: $ => seq(
+      '@layer',
+      sep(',', alias($._layer_name, $.layer_name)),
+      choice(';', $.block),
+    ),
+
+    _layer_name: _ => token(/[a-zA-Z_-][a-zA-Z0-9_-]*(\.[a-zA-Z_-][a-zA-Z0-9_-]*)*/),
+
+    // @page [name][:left|:right|:first|:blank] { … }
+    page_statement: $ => seq(
+      '@page',
+      sep(',', alias($._page_selector, $.page_selector)),
+      $.block,
+    ),
+
+    _page_selector: _ => token(choice(
+      /[a-zA-Z_-][a-zA-Z0-9_-]*(:[a-zA-Z-]+)*/,
+      /(:[a-zA-Z-]+)+/,
+    )),
+
+    // @function --name(--arg <type> [: default], …) [returns <type>] { … }
+    function_statement: $ => seq(
+      '@function',
+      alias($.identifier, $.function_name),
+      token.immediate('('),
+      sep(',', alias($._function_parameter, $.parameter)),
+      ')',
+      optional(seq('returns', $._syntax_type)),
+      $.block,
+    ),
+
+    _function_parameter: $ => seq(
+      alias($.identifier, $.plain_value),
+      optional($._syntax_type),
+      optional(seq(':', repeat1($._value))),
+    ),
+
+    _syntax_type: $ => alias(token(prec(1, /<[a-zA-Z-]+(\(\))?>[+#?]?/)), $.plain_value),
 
     media_statement: $ => seq(
       '@media',
@@ -88,7 +146,7 @@ export default grammar({
     ),
 
     keyframe_block: $ => seq(
-      sep1(',', choice($.from, $.to, $.integer_value)),
+      sep1(',', choice($.from, $.to, $.integer_value, $.float_value)),
       $.block,
     ),
 
@@ -150,8 +208,13 @@ export default grammar({
       $.keyframes_statement,
       $.supports_statement,
       $.scope_statement,
+      $.container_statement,
+      $.layer_statement,
+      $.page_statement,
+      $.function_statement,
       $.postcss_statement,
       $.at_rule,
+      ';',
     ),
 
     // Selectors
@@ -232,7 +295,7 @@ export default grammar({
     id_selector: $ => seq(
       optional($._selector),
       '#',
-      alias($.identifier, $.id_name),
+      alias($.class_name, $.id_name),
     ),
 
     attribute_selector: $ => seq(
@@ -242,6 +305,7 @@ export default grammar({
       optional(seq(
         choice('=', '~=', '^=', '|=', '*=', '$='),
         $._value,
+        optional(alias(choice('i', 's', 'I', 'S'), $.attribute_flag)),
       )),
       ']',
     ),
@@ -319,13 +383,15 @@ export default grammar({
       optional($.important),
     )),
 
-    important: _ => '!important',
+    important: _ => token(seq('!', /\s*/, /[iI][mM][pP][oO][rR][tT][aA][nN][tT]/)),
 
     // Media queries
 
     _query: $ => choice(
       alias($.identifier, $.keyword_query),
       $.feature_query,
+      $.range_query,
+      $.style_query,
       $.binary_query,
       $.unary_query,
       $.selector_query,
@@ -339,6 +405,35 @@ export default grammar({
       repeat1($._value),
       ')',
     ),
+
+    // Media Queries 4 range syntax: (width < 600px), (400px <= width <= 700px)
+    range_query: $ => seq(
+      '(',
+      $._range_operand,
+      $._range_comparison,
+      $._range_operand,
+      optional(seq($._range_comparison, $._range_operand)),
+      ')',
+    ),
+
+    _range_operand: $ => choice(
+      alias($.identifier, $.feature_name),
+      $.integer_value,
+      $.float_value,
+      $.call_expression,
+    ),
+
+    _range_comparison: _ => choice('<', '>', '<=', '>=', '='),
+
+    // style(--theme: dark), scroll-state(stuck: top), and the like inside @container / @supports / if()
+    style_query: $ => seq(
+      alias(choice('style', 'scroll-state', 'media', 'supports'), $.function_name),
+      token.immediate('('),
+      choice($._declaration_query, $._query),
+      ')',
+    ),
+
+    _declaration_query: $ => seq(alias($.identifier, $.feature_name), ':', repeat1($._value)),
 
     parenthesized_query: $ => seq(
       '(',
@@ -377,8 +472,22 @@ export default grammar({
       $.binary_expression,
       $.parenthesized_value,
       $.call_expression,
+      $.url_call,
+      $._syntax_type,
       $.important,
     )),
+
+    // url(../a.png), url(#mask), url("x") — an unquoted url is one raw token
+    url_call: $ => prec(1, seq(
+      alias(/[uU][rR][lL]/, $.function_name),
+      alias($._url_arguments, $.arguments),
+    )),
+
+    _url_arguments: $ => seq(
+      token.immediate('('),
+      optional(choice($.string_value, alias(token(prec(-1, /[^"'()\s]([^()\s]|\\.)*/)), $.plain_value))),
+      ')',
+    ),
 
     parenthesized_value: $ => seq(
       '(',
@@ -412,6 +521,7 @@ export default grammar({
       choice(
         /[0-9a-fA-F]{1,6}\s?/,
         /[^0-9a-fA-F\n\r]/,
+        /\r?\n/,
       ),
     )),
 
@@ -457,19 +567,27 @@ export default grammar({
 
     arguments: $ => seq(
       token.immediate('('),
-      sep(choice(',', ';'), repeat1($._value)),
+      sep(choice(',', ';'), choice(repeat1($._value), $.if_branch)),
+      optional(';'),
       ')',
+    ),
+
+    // if(media(width >= 600px): 50%; else: 100%)
+    if_branch: $ => seq(
+      choice($.style_query, alias('else', $.plain_value)),
+      ':',
+      repeat1($._value),
     ),
 
     class_name: $ => seq(
       choice($.identifier, $.escape_sequence),
       repeat(choice(
-        alias(/[a-zA-Z0-9-_\xA0-\xFF]+/, $.identifier),
+        alias(/[a-zA-Z0-9-_\u00A0-\uFFFF]+/, $.identifier),
         $.escape_sequence,
       )),
     ),
 
-    identifier: _ => /(--|-?[a-zA-Z_\xA0-\xFF])[a-zA-Z0-9-_\xA0-\xFF]*/,
+    identifier: _ => /(--|-?[a-zA-Z_\u00A0-\uFFFF])[a-zA-Z0-9-_\u00A0-\uFFFF]*/,
 
     at_keyword: _ => /@[a-zA-Z-_]+/,
 
