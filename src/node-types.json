@@ -206,6 +206,10 @@
           "named": true
         },
         {
+          "type": "selectors",
+          "named": true
+        },
+        {
           "type": "unary_query",
           "named": true
         }

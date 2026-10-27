@@ -6,6 +6,7 @@ enum TokenType {
     DESCENDANT_OP,
     PSEUDO_CLASS_SELECTOR_COLON,
     ERROR_RECOVERY,
+    DECLARATION_COLON,
 };
 
 static inline void advance(TSLexer *lexer) { lexer->advance(lexer, false); }
@@ -44,6 +45,9 @@ bool tree_sitter_css_external_scanner_scan(void *payload, TSLexer *lexer, const 
             if (iswspace(lexer->lookahead)) {
                 return false;
             }
+            if (!valid_symbols[DECLARATION_COLON]) {
+                return true;
+            }
             for (;;) {
                 if (lexer->lookahead == ';' || lexer->lookahead == '}' || lexer->eof(lexer)) {
                     return false;
@@ -68,7 +72,12 @@ bool tree_sitter_css_external_scanner_scan(void *payload, TSLexer *lexer, const 
             lexer->mark_end(lexer);
             lexer->result_symbol = PSEUDO_CLASS_SELECTOR_COLON;
 
-            // We need a `{` to be a pseudo class selector, a `;` indicates a property.
+            // Selector-only contexts, such as @custom-variant, can end with `;`.
+            // Only look ahead for a block when a declaration is also possible.
+            if (!valid_symbols[DECLARATION_COLON]) {
+                return true;
+            }
+            // A `{` indicates a pseudo class selector, a `;` indicates a property.
             // This does not apply if we're in a comment, however.
             bool in_comment = false;
             while (lexer->lookahead != ';' && lexer->lookahead != '}' && !lexer->eof(lexer)) {

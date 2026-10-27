@@ -21,6 +21,8 @@ export default grammar({
     $._descendant_operator,
     $._pseudo_class_selector_colon,
     $.__error_recovery,
+    // Never emitted; lets the scanner distinguish declarations from selector-only contexts.
+    $.__declaration_colon,
   ],
 
   inline: $ => [
@@ -118,10 +120,20 @@ export default grammar({
       ';',
     )),
 
-    at_rule: $ => seq(
-      $.at_keyword,
-      sep(',', $._query),
-      choice(';', $.block),
+    at_rule: $ => choice(
+      seq(
+        $.at_keyword,
+        sep(',', $._query),
+        choice(';', $.block),
+      ),
+      seq(
+        alias('@custom-variant', $.at_keyword),
+        alias($.identifier, $.keyword_query),
+        choice(
+          seq('(', $.selectors, ')', ';'),
+          $.block,
+        ),
+      ),
     ),
 
     // Rule sets
@@ -298,7 +310,7 @@ export default grammar({
 
     declaration: $ => seq(
       alias($.identifier, $.property_name),
-      ':',
+      choice(':', $.__declaration_colon),
       $._value,
       repeat(seq(
         optional(','),
@@ -310,7 +322,7 @@ export default grammar({
 
     last_declaration: $ => prec(1, seq(
       alias($.identifier, $.property_name),
-      ':',
+      choice(':', $.__declaration_colon),
       $._value,
       repeat(seq(
         optional(','),

@@ -1,0 +1,12 @@
+@custom-variant dark (&:hover);
+/* <- keyword */
+                   /* ^ tag */
+                     /* ^ attribute */
+
+@custom-variant dark {
+/* <- keyword */
+  &:hover {
+    @slot;
+    /* <- keyword */
+  }
+}
