@@ -1,0 +1,213 @@
+==============================
+Custom variant with attribute selectors
+==============================
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+---
+
+(stylesheet
+  (at_rule
+    (at_keyword)
+    (keyword_query)
+    (selectors
+      (pseudo_class_selector
+        (nesting_selector)
+        (class_name)
+        (arguments
+          (attribute_selector
+            (attribute_name)
+            (string_value
+              (string_content)))
+          (descendant_selector
+            (attribute_selector
+              (attribute_name)
+              (string_value
+                (string_content)))
+            (universal_selector)))))))
+
+==============================
+Custom variant selector lists
+==============================
+
+@custom-variant hocus (
+  &:hover,
+  &:focus-visible
+);
+@custom-variant dark (.dark > &);
+
+---
+
+(stylesheet
+  (at_rule
+    (at_keyword)
+    (keyword_query)
+    (selectors
+      (pseudo_class_selector
+        (nesting_selector)
+        (class_name
+          (identifier)))
+      (pseudo_class_selector
+        (nesting_selector)
+        (class_name
+          (identifier)))))
+  (at_rule
+    (at_keyword)
+    (keyword_query)
+    (selectors
+      (child_selector
+        (class_selector
+          (class_name
+            (identifier)))
+        (nesting_selector)))))
+
+==============================
+Custom variant block forms
+==============================
+
+@custom-variant theme-midnight {
+  &:where([data-theme="midnight"] *) {
+    @slot;
+  }
+}
+
+@custom-variant any-hover {
+  @media (any-hover: hover) {
+    &:hover {
+      @slot;
+    }
+  }
+}
+
+---
+
+(stylesheet
+  (at_rule
+    (at_keyword)
+    (keyword_query)
+    (block
+      (rule_set
+        (selectors
+          (pseudo_class_selector
+            (nesting_selector)
+            (class_name)
+            (arguments
+              (descendant_selector
+                (attribute_selector
+                  (attribute_name)
+                  (string_value
+                    (string_content)))
+                (universal_selector)))))
+        (block
+          (at_rule
+            (at_keyword))))))
+  (at_rule
+    (at_keyword)
+    (keyword_query)
+    (block
+      (media_statement
+        (feature_query
+          (feature_name)
+          (plain_value))
+        (block
+          (rule_set
+            (selectors
+              (pseudo_class_selector
+                (nesting_selector)
+                (class_name
+                  (identifier))))
+            (block
+              (at_rule
+                (at_keyword)))))))))
+
+==============================
+Custom variant comments and surrounding rules
+==============================
+
+@import "tailwindcss";
+@custom-variant /* name */ dark /* selector */ (
+  /* before */ &:where(.dark, .dark *) /* after */
+);
+@theme {
+  --color-brand: red;
+}
+.button {
+  color: blue;
+}
+
+---
+
+(stylesheet
+  (import_statement
+    (string_value
+      (string_content)))
+  (at_rule
+    (at_keyword)
+    (comment)
+    (keyword_query)
+    (comment)
+    (comment)
+    (selectors
+      (pseudo_class_selector
+        (nesting_selector)
+        (class_name)
+        (arguments
+          (class_selector
+            (class_name
+              (identifier)))
+          (descendant_selector
+            (class_selector
+              (class_name
+                (identifier)))
+            (universal_selector)))))
+    (comment))
+  (at_rule
+    (at_keyword)
+    (block
+      (declaration
+        (property_name)
+        (plain_value))))
+  (rule_set
+    (selectors
+      (class_selector
+        (class_name
+          (identifier))))
+    (block
+      (declaration
+        (property_name)
+        (plain_value)))))
+
+==============================
+Custom variant pseudo-classes in selector-only contexts
+==============================
+
+@custom-variant hocus (.button :hover, a:focus, &:is(:hover, :focus));
+
+---
+
+(stylesheet
+  (at_rule
+    (at_keyword)
+    (keyword_query)
+    (selectors
+      (descendant_selector
+        (class_selector
+          (class_name
+            (identifier)))
+        (pseudo_class_selector
+          (class_name
+            (identifier))))
+      (pseudo_class_selector
+        (tag_name)
+        (class_name
+          (identifier)))
+      (pseudo_class_selector
+        (nesting_selector)
+        (class_name)
+        (arguments
+          (pseudo_class_selector
+            (class_name
+              (identifier)))
+          (pseudo_class_selector
+            (class_name
+              (identifier))))))))
